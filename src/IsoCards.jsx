@@ -11,6 +11,7 @@ import {
     ListItem,
     ListItemText,
 } from "@mui/material";
+import { motion } from "framer-motion";
 
 const isoData = [
     {
@@ -69,160 +70,186 @@ const isoData = [
 
 export default function IsoCards() {
     return (
-        <Box sx={{ py: 8, px: 4 }}>
-            {/* Section Heading */}
-            <Typography variant="h4" fontWeight="bold" gutterBottom textAlign="center">
-                ISO Management System
-            </Typography>
-
-            <Typography
-                variant="body1"
-                sx={{
-                    fontFamily:
-                        'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-                    fontWeight: 400,
-                    fontSize: "1rem",
-                    lineHeight: 1.5,
-                    color: "text.secondary",
-                    textAlign: "center",
-                    maxWidth: 700,
-                    mx: "auto",
-                    mb: 6,
-                }}
+        <Box sx={{ py: { xs: 6, md: 10 }, px: { xs: 2, md: 6 } }}>
+            {/* Heading */}
+            <motion.div
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
             >
-                We provide ISO management system solutions to help businesses achieve
-                compliance, efficiency, and excellence in quality, environment, safety,
-                energy, security, and climate management.
-            </Typography>
+                <Typography
+                    variant="h4"
+                    fontWeight="bold"
+                    gutterBottom
+                    textAlign="center"
+                    sx={{ fontSize: { xs: "1.8rem", md: "2.5rem" } }}
+                >
+                    ISO Management System
+                </Typography>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+            >
+                <Typography
+                    variant="body1"
+                    sx={{
+                        fontFamily:
+                            'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+                        fontWeight: 400,
+                        fontSize: { xs: "0.95rem", md: "1rem" },
+                        lineHeight: 1.6,
+                        color: "text.secondary",
+                        textAlign: "center",
+                        maxWidth: 750,
+                        mx: "auto",
+                        mb: { xs: 4, md: 6 },
+                    }}
+                >
+                    We provide ISO management system solutions to help businesses achieve
+                    compliance, efficiency, and excellence in quality, environment, safety,
+                    energy, security, and climate management.
+                </Typography>
+            </motion.div>
 
             {/* Cards */}
             <Grid container spacing={4} justifyContent="center">
                 {isoData.map((item, index) => (
-                    <Grid item xs={12} sm={10} md={8} key={index}>
-                        <Card
-                            sx={{
-                                borderRadius: "20px",
-                                border: "1px solid #d1d5db", // thin gray border
-                                boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
-                                width: 560,
-                                mx: "auto",
-                                p: 4,
-                                textAlign: "left",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-between",
-                                transition: "all 0.4s ease",
-                                overflow: "hidden", // hides extra points until hover
-                                maxHeight: 250, // collapsed height
-                                "&:hover": {
-                                    maxHeight: 600, // expanded height
-                                    transform: "scale(1.03)",
-                                    borderColor: "#6C63FF",
-                                },
-                                "&:hover .titleText": {
-                                    color: "#0D47A1",
-                                },
-                                "&:hover .extraPoints": {
-                                    display: "block",
-                                },
-                            }}
+                    <Grid item xs={12} sm={10} md={6} lg={4} key={index}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: index * 0.2 }}
                         >
+                            <Card
+                                sx={{
+                                    borderRadius: "20px",
+                                    border: "1px solid #d1d5db",
+                                    boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
+                                    width: "100%",
+                                    maxWidth: 560,
+                                    mx: "auto",
+                                    p: { xs: 2, md: 4 },
+                                    textAlign: "left",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "space-between",
+                                    transition: "all 0.4s ease",
+                                    overflow: "hidden",
+                                    maxHeight: 250,
+                                    "&:hover": {
+                                        maxHeight: 600,
+                                        transform: "scale(1.03)",
+                                        borderColor: "#6C63FF",
+                                    },
+                                    "&:hover .titleText": {
+                                        color: "#0D47A1",
+                                    },
+                                    "&:hover .extraPoints": {
+                                        display: "block",
+                                    },
+                                }}
+                            >
+                                <Stack
+                                    direction={{ xs: "column", sm: "row" }}
+                                    alignItems="flex-start"
+                                    spacing={3}
+                                >
+                                    {/* Text Content */}
+                                    <CardContent sx={{ flex: 1, p: 0 }}>
+                                        <Typography
+                                            className="titleText"
+                                            gutterBottom
+                                            sx={{
+                                                fontFamily:
+                                                    'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+                                                fontWeight: 500,
+                                                fontSize: { xs: "1.2rem", md: "1.5rem" },
+                                                lineHeight: 1.3,
+                                                transition: "color 0.3s ease",
+                                            }}
+                                        >
+                                            {item.title}
+                                        </Typography>
 
-                            <Stack direction="row" alignItems="flex-start" spacing={3}>
-                                {/* Text Content */}
-                                <CardContent sx={{ flex: 1, p: 0 }}>
-                                    <Typography
-                                        className="titleText"
-                                        gutterBottom
-                                        sx={{
-                                            fontFamily:
-                                                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-                                            fontWeight: 500,
-                                            fontSize: "1.5rem",
-                                            lineHeight: 1.2,
-                                            transition: "color 0.3s ease",
-                                        }}
-                                    >
-                                        {item.title}
-                                    </Typography>
+                                        <Typography
+                                            mb={2}
+                                            sx={{
+                                                fontWeight: 400,
+                                                fontSize: { xs: "0.8rem", md: "0.9rem" },
+                                                lineHeight: 1.57,
+                                                color: "text.secondary",
+                                            }}
+                                        >
+                                            {item.subtitle}
+                                        </Typography>
 
-                                    <Typography
-                                        mb={2}
-                                        sx={{
-                                            fontFamily:
-                                                'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-                                            fontWeight: 400,
-                                            fontSize: "0.875rem",
-                                            lineHeight: 1.57,
-                                            color: "text.secondary",
-                                        }}
-                                    >
-                                        {item.subtitle}
-                                    </Typography>
-
-                                    {/* Hidden points that show on hover */}
-                                    <List
-                                        className="extraPoints"
-                                        sx={{
-                                            pl: 2,
-                                            mb: 2,
-                                            display: "none",
-                                            listStyleType: "disc",
-                                            "& .MuiListItem-root": {
-                                                display: "list-item",
+                                        {/* Hidden points */}
+                                        <List
+                                            className="extraPoints"
+                                            sx={{
+                                                pl: 2,
+                                                mb: 2,
+                                                display: "none",
                                                 listStyleType: "disc",
-                                                pl: 1,
-                                            },
-                                        }}
-                                    >
-                                        {item.points.map((point, i) => (
-                                            <ListItem key={i} sx={{ py: 0.3 }}>
-                                                <ListItemText
-                                                    primary={point}
-                                                    primaryTypographyProps={{
-                                                        variant: "body2",
-                                                        sx: { fontFamily: "Inter, sans-serif" },
-                                                    }}
-                                                />
-                                            </ListItem>
-                                        ))}
-                                    </List>
+                                                "& .MuiListItem-root": {
+                                                    display: "list-item",
+                                                    listStyleType: "disc",
+                                                    pl: 1,
+                                                },
+                                            }}
+                                        >
+                                            {item.points.map((point, i) => (
+                                                <ListItem key={i} sx={{ py: 0.3 }}>
+                                                    <ListItemText
+                                                        primary={point}
+                                                        primaryTypographyProps={{
+                                                            variant: "body2",
+                                                            sx: { fontFamily: "Inter, sans-serif" },
+                                                        }}
+                                                    />
+                                                </ListItem>
+                                            ))}
+                                        </List>
 
-                                    <Button
-                                        variant="outlined"
+                                        <Button
+                                            variant="outlined"
+                                            sx={{
+                                                textTransform: "none",
+                                                borderRadius: "10px",
+                                                px: 3,
+                                                py: 1,
+                                                color: "#6C63FF",
+                                                borderColor: "#6C63FF",
+                                                "&:hover": {
+                                                    backgroundColor: "#6C63FF",
+                                                    color: "#fff",
+                                                },
+                                            }}
+                                        >
+                                            Learn More
+                                        </Button>
+                                    </CardContent>
+
+                                    {/* Image */}
+                                    <Box
+                                        component="img"
+                                        src={item.image}
+                                        alt={item.title}
                                         sx={{
-                                            textTransform: "none",
-                                            borderRadius: "10px",
-                                            px: 3,
-                                            py: 1,
-                                            color: "#6C63FF",
-                                            borderColor: "#6C63FF",
-                                            transition: "all 0.4s ease",
-                                            "&:hover": {
-                                                backgroundColor: "#6C63FF",
-                                                color: "#fff",
-                                                // Removed scale here so card zooms instead
-                                            },
+                                            width: { xs: 80, sm: 100, md: 120 },
+                                            height: { xs: 80, sm: 100, md: 120 },
+                                            objectFit: "contain",
+                                            mt: { xs: 2, sm: 1 },
+                                            mx: { xs: "auto", sm: 0 },
                                         }}
-                                    >
-                                        Learn More
-                                    </Button>
-                                </CardContent>
-
-                                {/* Image */}
-                                <Box
-                                    component="img"
-                                    src={item.image}
-                                    alt={item.title}
-                                    sx={{
-                                        width: 120,
-                                        height: 120,
-                                        objectFit: "contain",
-                                        mt: 1,
-                                    }}
-                                />
-                            </Stack>
-                        </Card>
+                                    />
+                                </Stack>
+                            </Card>
+                        </motion.div>
                     </Grid>
                 ))}
             </Grid>
