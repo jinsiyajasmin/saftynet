@@ -17,9 +17,7 @@ export default function App() {
             element={
               <>
                 <Home />
-                <IsoCards />
-                <CompaniesSection />
-                <Footer />
+               
               </>
             }
           />
