@@ -86,7 +86,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-4xl md:text-5xl font-bold mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6"
           >
             Your <span className="text-indigo-400">Trusted Partner</span> in ISO Consultancy <br />
             and Business Solutions
