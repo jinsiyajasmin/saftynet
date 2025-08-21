@@ -54,13 +54,22 @@ export default function Footer() {
               MENU
             </Typography>
             <Stack spacing={1}>
-              <Link href="#" underline="none" color="text.secondary">
+              <Link href="#" underline="none" color="text.secondary"sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}>
                 Services
               </Link>
-              <Link href="#" underline="none" color="text.secondary">
+              <Link href="#" underline="none" color="text.secondary"sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}>
                 Solutions
               </Link>
-              <Link href="#" underline="none" color="text.secondary">
+              <Link href="#" underline="none" color="text.secondary"sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}>
                 Company
               </Link>
             </Stack>
@@ -77,13 +86,22 @@ export default function Footer() {
               LEGAL
             </Typography>
             <Stack spacing={1}>
-              <Link href="#" underline="none" color="text.secondary">
+              <Link href="#" underline="none" color="text.secondary"sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}>
                 Terms & Conditions
               </Link>
-              <Link href="#" underline="none" color="text.secondary">
+              <Link href="#" underline="none" color="text.secondary"sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}>
                 License
               </Link>
-              <Link href="#" underline="none" color="text.secondary">
+              <Link href="#" underline="none" color="text.secondary"sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}>
                 Contact
               </Link>
             </Stack>
@@ -101,21 +119,29 @@ export default function Footer() {
             </Typography>
             <Stack spacing={1}>
               <Stack direction="row" alignItems="center" spacing={1}>
-                <Instagram fontSize="small" sx={{ color: "#6C63FF" }} />
+                <Instagram fontSize="small" sx={{ color: "#FDA410" }} />
                 <Link
                   href="https://instagram.com"
                   underline="none"
                   color="text.secondary"
+                  sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}
                 >
                   Instagram
                 </Link>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={1}>
-                <LinkedIn fontSize="small" sx={{ color: "#6C63FF" }} />
+                <LinkedIn fontSize="small" sx={{ color: "#FDA410" }} />
                 <Link
                   href="https://linkedin.com"
                   underline="none"
                   color="text.secondary"
+                  sx={{ transition: "color 0.3s ease", // smooth color transition
+                      "&:hover": {
+                        color: "#FDA410",// blue from theme (or use "#3b82f6")
+                      },}}
                 >
                   LinkedIn
                 </Link>
