@@ -6,6 +6,9 @@ import Home from "./Home";
 import Navbar from "./Navbar"; // ✅ import your Navbar component
 import ISO45001View from "../pages/ISO45001View";
 import ISO14001Page from "../pages/ISO14001Page";
+import ISO50001Page from "../pages/ISO50001Page";
+import ISO14068Page from "../pages/ISO14068Page";
+import ISO27001Page from "../pages/ISO27001Pages";
 
 export default function App() {
   return (
@@ -58,12 +61,34 @@ export default function App() {
             }
           />
            <Route
-            path="/iso14001"
+            path="/iso50001"
             element={
               <>
                 <Navbar />
 
-                <ISO14001Page/>
+                <ISO50001Page/>
+                <Footer />
+              </>
+            }
+          />
+           <Route
+            path="/iso14068"
+            element={
+              <>
+                <Navbar />
+
+                <ISO14068Page/>
+                <Footer />
+              </>
+            }
+          />
+           <Route
+            path="/iso27001"
+            element={
+              <>
+                <Navbar />
+
+                <ISO27001Page/>
                 <Footer />
               </>
             }
