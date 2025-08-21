@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import IsoCards from "./IsoCards";
-import CompaniesSection from "./CompaniesSection";
 import Footer from "./Footer";
-import ISO9001Page from "./ISO9001Page";
+import ISO9001Page from "../pages/ISO9001Page";
 import Home from "./Home";
+import Navbar from "./Navbar"; // ✅ import your Navbar component
+import ISO45001View from "../pages/ISO45001View";
+import ISO14001Page from "../pages/ISO14001Page";
 
 export default function App() {
   return (
@@ -17,7 +18,7 @@ export default function App() {
             element={
               <>
                 <Home />
-               
+
               </>
             }
           />
@@ -27,7 +28,42 @@ export default function App() {
             path="/iso9001"
             element={
               <>
+                <Navbar />
+
                 <ISO9001Page />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/iso45001"
+            element={
+              <>
+                <Navbar />
+
+                <ISO45001View />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/iso14001"
+            element={
+              <>
+                <Navbar />
+
+                <ISO14001Page/>
+                <Footer />
+              </>
+            }
+          />
+           <Route
+            path="/iso14001"
+            element={
+              <>
+                <Navbar />
+
+                <ISO14001Page/>
                 <Footer />
               </>
             }

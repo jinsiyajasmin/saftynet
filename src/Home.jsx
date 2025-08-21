@@ -3,30 +3,31 @@ import { motion } from "framer-motion";
 import IsoCards from "./IsoCards";
 import CompaniesSection from "./CompaniesSection";
 import Footer from "./Footer";
+import Navbar from "./Navbar";  // ✅ import your Navbar component
+
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="dark">
-      <div className="relative min-h-screen bg-gray-900 text-white transition-colors duration-300 overflow-hidden">
 
-        {/* Animated Background Grid */}
+
+    <div className="dark">
+      <div className="relative h-[650px] bg-[#0d1117] text-white transition-colors duration-300 overflow-hidden">
+
+
+        {/* 🔹 Animated Background Grid (unchanged) */}
         <div className="absolute inset-0 -z-10">
-          {/* Main grid pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:80px_80px] opacity-30"></div>
-          {/* Secondary finer grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#334155_1px,transparent_1px),linear-gradient(to_bottom,#334155_1px,transparent_1px)] bg-[size:20px_20px] opacity-10"></div>
 
-          {/* Animated moving grid */}
           <motion.div
             className="absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.3)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.3)_1px,transparent_1px)] bg-[size:160px_160px] opacity-20"
             animate={{ backgroundPosition: ["0px 0px", "160px 160px"] }}
             transition={{ duration: 25, ease: "linear", repeat: Infinity }}
           ></motion.div>
 
-          {/* Subtle glow effects */}
           <div className="absolute inset-0">
             {[...Array(8)].map((_, i) => (
               <motion.div
@@ -43,51 +44,18 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Navbar */}
-        <motion.header
+        <motion.div
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="sticky top-0 z-50 bg-[#0f1419]/95 backdrop-blur-sm border-b border-gray-800/50"
+          className="fixed top-0 left-0 w-full z-50 bg-[#0f1419]/95 backdrop-blur-sm border-b border-gray-800/50"
           style={{ height: "120px" }}
         >
-          <div className="flex justify-between items-center h-full mx-[120px]">
-            {/* Left: Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg">S</span>
-              </div>
-              <span className="text-2xl font-semibold">
-                Safety<span className="text-orange-400">nett</span>
-              </span>
-            </div>
+          <Navbar />
+        </motion.div>
 
-            {/* Middle: Nav Links */}
-            <nav className="hidden lg:flex gap-10 text-base font-medium text-gray-300 mx-[120px]">
-              <a href="#">Services</a>
-              <a href="#">ISO Management System</a>
-              <a href="#">NettForm App</a>
-              <a href="#">Competent Person & SSIP</a>
-              <a href="#">Audits & Inspections</a>
-              <a href="#">Training</a>
-              <a href="#">Resources</a>
-              <a href="#">About Us</a>
-            </nav>
 
-            {/* Right */}
-            <div className="flex items-center gap-8">
-              <span className="text-base text-gray-400 font-medium">iAudit Global</span>
-              <span className="cursor-pointer hover:text-indigo-400 transition-colors duration-200 text-base text-gray-300 font-medium">
-                Search
-              </span>
-              <button className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl hover:opacity-90 transition font-semibold shadow-lg">
-                Get a Quote
-              </button>
-            </div>
-          </div>
-        </motion.header>
-
-        {/* Mobile Menu */}
+        {/* 🔹 Mobile Menu (kept for now) */}
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -109,8 +77,11 @@ export default function Home() {
           </motion.div>
         )}
 
+
+
         {/* Hero Section */}
-        <main className="px-10 py-24 text-center">
+        <main className="px-10 pt-[220px] pb-24 text-center">
+
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
