@@ -6,7 +6,15 @@ const companies = [
   { name: "Microsoft", logo: "/Deltron.png" },
   { name: "Amazon", logo: "/Construct_Lifts.png" },
   { name: "Netflix", logo: "/Adstone.png" },
+  { name: "Apple", logo: "/onision.png" },
+  { name: "Apple", logo: "/ICRIT.png" },
+  { name: "Apple", logo: "/Stannah.png" },
+  { name: "Apple", logo: "/Peerless.png" },
+  { name: "Apple", logo: "/Mitsubishi.png" },
+  { name: "Apple", logo: "/Low.png" },
+  { name: "Apple", logo: "/Lift.png" },
   { name: "Apple", logo: "/Ardo_Lifts.png" },
+
 ];
 
 export default function CompaniesSection() {
@@ -39,6 +47,10 @@ export default function CompaniesSection() {
             overflow: "hidden",
             whiteSpace: "nowrap",
             position: "relative",
+            height: 120,              // 🔹 increased height
+            display: "flex",
+            alignItems: "center",
+
           }}
         >
           <Box
@@ -59,12 +71,14 @@ export default function CompaniesSection() {
                   height: 60,
                   mx: 6,
                   filter: "grayscale(100%)",
-                  transition: "all 0.3s ease",
+                  transition: "all 0.4s ease",
                   "&:hover": {
                     filter: "grayscale(0%)",
+                    transform: "scale(1.2) translateY(-5px)",
                   },
                 }}
               />
+
             ))}
           </Box>
         </Box>
@@ -73,12 +87,18 @@ export default function CompaniesSection() {
       {/* CSS Keyframes */}
       <style>
         {`
-          @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+  `}
       </style>
+
     </Box>
   );
 }
