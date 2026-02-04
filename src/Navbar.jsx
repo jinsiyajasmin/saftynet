@@ -7,12 +7,27 @@ import {
   Typography,
   Menu,
   MenuItem,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Collapse,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false); // For mobile services dropdown
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -20,6 +35,14 @@ export default function Navbar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleMobileServicesToggle = () => {
+    setServicesOpen(!servicesOpen);
   };
 
   const services = [
@@ -31,178 +54,290 @@ export default function Navbar() {
     { label: "ISO14068: 2023 Climate Change Management", route: "/iso14068" },
   ];
 
+  const navLinks = [
+    "ISO Management System",
+    "NettForm App",
+    "Competent Person & SSIP",
+    "Audits & Inspections",
+    "Training",
+    "Resources",
+    "About Us",
+  ];
+
+  // Mobile Drawer Content
+  const drawer = (
+    <Box sx={{ width: 280, bgcolor: "#1a1d23", height: "100%", color: "white", p: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+        <IconButton onClick={handleDrawerToggle} sx={{ color: "white" }}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
+      <List>
+        <ListItem disablePadding sx={{ mb: 2 }}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={() => {
+              navigate("/quote"); // Assuming route, adjust if needed
+              handleDrawerToggle();
+            }}
+            sx={{
+              textTransform: "none",
+              borderRadius: "10px",
+              py: 1,
+              fontWeight: 500,
+              background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+              "&:hover": {
+                background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+              },
+            }}
+          >
+            Get a Quote
+          </Button>
+        </ListItem>
+
+        {/* Services Dropdown in Mobile */}
+        <ListItem disablePadding onClick={handleMobileServicesToggle} sx={{ cursor: "pointer", flexDirection: "column", alignItems: "flex-start" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', py: 1, px: 1 }}>
+            <Typography sx={{ fontWeight: 500 }}>Services</Typography>
+            <Typography>{servicesOpen ? "-" : "+"}</Typography>
+          </Box>
+          <Collapse in={servicesOpen} timeout="auto" unmountOnExit sx={{ width: '100%' }}>
+            <List component="div" disablePadding>
+              {services.map((service) => (
+                <ListItem key={service.route} button onClick={() => { navigate(service.route); handleDrawerToggle(); }} sx={{ pl: 3 }}>
+                  <ListItemText primary={service.label} primaryTypographyProps={{ fontSize: 13, color: '#ccc' }} />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+        </ListItem>
+
+        {navLinks.map((text) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton onClick={() => { navigate(`/${text.toLowerCase().replace(/ /g, '-')}`); handleDrawerToggle(); }}>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => { handleDrawerToggle(); }}>
+            <ListItemText primary="iAudit Global" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => { handleDrawerToggle(); }}>
+            <ListItemText primary="Search" />
+          </ListItemButton>
+        </ListItem>
+
+      </List>
+    </Box>
+  );
+
   return (
     <>
-      {/* Top Navbar */}
-      <AppBar
-        position="sticky"
-        sx={{
-          backgroundColor: "#0d1117", // dark background
-          boxShadow: "none",
-          px: 15,
-        }}
-      >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Logo */}
-          <Box
-            component="img"
-            src="/Logo1.png"
-            alt="Logo"
-            onClick={() => navigate("/")} // 👈 navigate to home
-            sx={{ height: 28, cursor: "pointer" }}
-          />
-
-          {/* Right Menu */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            <Typography
-              variant="body2"
-              sx={{ color: "grey", cursor: "pointer", "&:hover": { color: "white" } }}
+      {/* Mobile Navbar */}
+      {isMobile ? (
+        <AppBar position="sticky" sx={{ backgroundColor: "#0d1117", boxShadow: "none", px: 2 }}>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              component="img"
+              src="/Logo1.png"
+              alt="Logo"
+              onClick={() => navigate("/")}
+              sx={{ height: 24, cursor: "pointer" }}
+            />
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
             >
-              iAudit Global
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: "grey", cursor: "pointer", "&:hover": { color: "white" } }}
-            >
-              Search
-            </Typography>
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+          <Drawer
+            anchor="right"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              "& .MuiDrawer-paper": { backgroundColor: "#1a1d23" }
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </AppBar>
+      ) : (
+        /* Desktop Navbar */
+        <>
+          {/* Top Navbar */}
+          <AppBar
+            position="sticky"
+            sx={{
+              backgroundColor: "#0d1117", // dark background
+              boxShadow: "none",
+              px: 15, // Keep large padding for desktop
+            }}
+          >
+            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+              {/* Logo */}
+              <Box
+                component="img"
+                src="/Logo1.png"
+                alt="Logo"
+                onClick={() => navigate("/")} // 👈 navigate to home
+                sx={{ height: 28, cursor: "pointer" }}
+              />
 
-            {/* CTA Button */}
-            <Button
-              variant="contained"
+              {/* Right Menu */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "grey", cursor: "pointer", "&:hover": { color: "white" } }}
+                >
+                  iAudit Global
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "grey", cursor: "pointer", "&:hover": { color: "white" } }}
+                >
+                  Search
+                </Typography>
+
+                {/* CTA Button */}
+                <Button
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    px: 3,
+                    py: 1,
+                    fontWeight: 500,
+                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                    },
+                  }}
+                >
+                  Get a Quote
+                </Button>
+              </Box>
+            </Toolbar>
+          </AppBar>
+
+          {/* Secondary Navbar */}
+          <AppBar
+            position="sticky"
+            sx={{
+              backgroundColor: "#0d1117",
+              boxShadow: "none",
+              top: "64px", // below first navbar
+            }}
+          >
+            <Toolbar
               sx={{
-                textTransform: "none",
-                borderRadius: "10px",
-                px: 3,
-                py: 1,
-                fontWeight: 500,
-                background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
-                "&:hover": {
-                  background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
-                },
+                display: "flex",
+                justifyContent: "center",
+                gap: 6,
               }}
             >
-              Get a Quote
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      {/* Secondary Navbar */}
-      <AppBar
-        position="sticky"
-        sx={{
-          backgroundColor: "#0d1117",
-          boxShadow: "none",
-          top: "64px", // below first navbar
-        }}
-      >
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 6,
-          }}
-        >
-          {/* Services with dropdown */}
-          <Typography
-            variant="body2"
-            aria-controls="services-menu"
-            aria-haspopup="true"
-            onMouseEnter={handleOpen}
-            sx={{
-              color: Boolean(anchorEl) ? "white" : "gray",
-              cursor: "pointer",
-              fontWeight: 500,
-              display: "flex",
-              alignItems: "center",
-              gap: 0.5,
-              "&:hover": { color: "white" },
-            }}
-          >
-            Services
-           
-          </Typography>
-
-
-          <Menu
-            id="services-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            MenuListProps={{
-              onMouseLeave: handleClose,
-              sx: {
-                px: 1,
-              },
-            }}
-            PaperProps={{
-              elevation: 3,
-              sx: {
-                mt: 1,
-                borderRadius: 2,
-                minWidth: 260,
-                backgroundColor: "#1a1d23", // dark theme
-                color: "white",
-              },
-            }}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-          >
-            {services.map((service) => (
-              <MenuItem
-                key={service.route}
-                onClick={() => {
-                  navigate(service.route);
-                  handleClose();
-                }}
+              {/* Services with dropdown */}
+              <Typography
+                variant="body2"
+                aria-controls="services-menu"
+                aria-haspopup="true"
+                onMouseEnter={handleOpen}
                 sx={{
-                  fontSize: 14,
+                  color: Boolean(anchorEl) ? "white" : "gray",
+                  cursor: "pointer",
                   fontWeight: 500,
-                  py: 1.2,
-                  borderRadius: 1,
-                  "&:hover": {
-                    backgroundColor: "rgba(255,255,255,0.08)",
-                  },
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                  "&:hover": { color: "white" },
                 }}
               >
-                {service.label}
-              </MenuItem>
-            ))}
-          </Menu>
+                Services
+
+              </Typography>
 
 
-          {/* Other Nav Links */}
-          {[
-            "ISO Management System",
-            "NettForm App",
-            "Competent Person & SSIP",
-            "Audits & Inspections",
-            "Training",
-            "Resources",
-            "About Us",
-          ].map((item) => (
-            <Typography
-              key={item}
-              variant="body2"
-              sx={{
-                color: "gray",
-                cursor: "pointer",
-                fontWeight: 500,
-                "&:hover": { color: "white" },
-              }}
-            >
-              {item}
-            </Typography>
-          ))}
-        </Toolbar>
-      </AppBar>
+              <Menu
+                id="services-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                MenuListProps={{
+                  onMouseLeave: handleClose,
+                  sx: {
+                    px: 1,
+                  },
+                }}
+                PaperProps={{
+                  elevation: 3,
+                  sx: {
+                    mt: 1,
+                    borderRadius: 2,
+                    minWidth: 260,
+                    backgroundColor: "#1a1d23", // dark theme
+                    color: "white",
+                  },
+                }}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+              >
+                {services.map((service) => (
+                  <MenuItem
+                    key={service.route}
+                    onClick={() => {
+                      navigate(service.route);
+                      handleClose();
+                    }}
+                    sx={{
+                      fontSize: 14,
+                      fontWeight: 500,
+                      py: 1.2,
+                      borderRadius: 1,
+                      "&:hover": {
+                        backgroundColor: "rgba(255,255,255,0.08)",
+                      },
+                    }}
+                  >
+                    {service.label}
+                  </MenuItem>
+                ))}
+              </Menu>
+
+
+              {/* Other Nav Links */}
+              {navLinks.map((item) => (
+                <Typography
+                  key={item}
+                  variant="body2"
+                  sx={{
+                    color: "gray",
+                    cursor: "pointer",
+                    fontWeight: 500,
+                    "&:hover": { color: "white" },
+                  }}
+                >
+                  {item}
+                </Typography>
+              ))}
+            </Toolbar>
+          </AppBar>
+        </>
+      )}
     </>
   );
 }
