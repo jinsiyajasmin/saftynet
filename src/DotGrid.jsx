@@ -1,10 +1,8 @@
 import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
-import { InertiaPlugin } from 'gsap/InertiaPlugin';
+// InertiaPlugin removed for Vercel compatibility (requires premium license)
 
 import './DotGrid.css';
-
-gsap.registerPlugin(InertiaPlugin);
 
 const throttle = (func, limit) => {
     let lastCall = 0;
@@ -199,18 +197,24 @@ const DotGrid = ({
                 if (speed > speedTrigger && dist < proximity && !dot._inertiaApplied) {
                     dot._inertiaApplied = true;
                     gsap.killTweensOf(dot);
-                    const pushX = dot.cx - pr.x + vx * 0.005;
-                    const pushY = dot.cy - pr.y + vy * 0.005;
+                    // Simplified push effect without InertiaPlugin
+                    const pushFactor = 0.2; // Adjust for feel
+                    const targetX = (vx * pushFactor);
+                    const targetY = (vy * pushFactor);
+
                     gsap.to(dot, {
-                        inertia: { xOffset: pushX, yOffset: pushY, resistance },
+                        xOffset: targetX,
+                        yOffset: targetY,
+                        duration: 0.3,
+                        ease: 'power2.out',
                         onComplete: () => {
                             gsap.to(dot, {
                                 xOffset: 0,
                                 yOffset: 0,
                                 duration: returnDuration,
-                                ease: 'elastic.out(1,0.75)'
+                                ease: 'elastic.out(1,0.75)',
+                                onComplete: () => { dot._inertiaApplied = false; }
                             });
-                            dot._inertiaApplied = false;
                         }
                     });
                 }
@@ -229,16 +233,21 @@ const DotGrid = ({
                     const falloff = Math.max(0, 1 - dist / shockRadius);
                     const pushX = (dot.cx - cx) * shockStrength * falloff;
                     const pushY = (dot.cy - cy) * shockStrength * falloff;
+
+                    // Simple easing instead of inertia
                     gsap.to(dot, {
-                        inertia: { xOffset: pushX, yOffset: pushY, resistance },
+                        xOffset: pushX,
+                        yOffset: pushY,
+                        duration: 0.2,
+                        ease: 'power2.out',
                         onComplete: () => {
                             gsap.to(dot, {
                                 xOffset: 0,
                                 yOffset: 0,
                                 duration: returnDuration,
-                                ease: 'elastic.out(1,0.75)'
+                                ease: 'elastic.out(1,0.75)',
+                                onComplete: () => { dot._inertiaApplied = false; }
                             });
-                            dot._inertiaApplied = false;
                         }
                     });
                 }
