@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Typography, Container } from "@mui/material";
 
 const companies = [
   { name: "Google", logo: "/fujitec.png" },
@@ -14,91 +13,50 @@ const companies = [
   { name: "Apple", logo: "/Low.png" },
   { name: "Apple", logo: "/Lift.png" },
   { name: "Apple", logo: "/Ardo_Lifts.png" },
-
 ];
 
 export default function CompaniesSection() {
   return (
-    <Box sx={{ py: 10, backgroundColor: "#f9fafb" }}>
-      <Container maxWidth="lg" sx={{ textAlign: "center" }}>
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: 600, mb: 2, fontFamily: "Inter, sans-serif" }}
-        >
+    <div className="py-20 bg-[#f9fafb]">
+      <div className="max-w-[1200px] mx-auto text-center px-6">
+        <h4 className="text-4xl font-semibold mb-2 font-inter">
           Trusted by Leading Companies
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "text.secondary",
-            mb: 6,
-            maxWidth: "600px",
-            mx: "auto",
-            fontFamily: "Inter, sans-serif",
-          }}
-        >
+        </h4>
+        <p className="text-gray-500 mb-12 max-w-[600px] mx-auto font-inter">
           SafetyNet is proud to be working with global leaders across industries
           to deliver trusted and reliable safety solutions.
-        </Typography>
+        </p>
 
         {/* Scrolling logos */}
-        <Box
-          sx={{
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            position: "relative",
-            height: 120,              // 🔹 increased height
-            display: "flex",
-            alignItems: "center",
-
-          }}
-        >
-          <Box
-            className="scrolling-logos"
-            sx={{
-              display: "inline-flex",
-              animation: "scroll 30s linear infinite",
+        <div className="overflow-hidden whitespace-nowrap relative h-[120px] flex items-center">
+          <div
+            className="inline-flex animate-scroll"
+            style={{
+              animation: "scroll 30s linear infinite"
             }}
           >
             {/* Duplicate logos for seamless loop */}
             {[...companies, ...companies].map((company, index) => (
-              <Box
+              <img
                 key={index}
-                component="img"
                 src={company.logo}
                 alt={company.name}
-                sx={{
-                  height: 60,
-                  mx: 6,
-                  filter: "grayscale(100%)",
-                  transition: "all 0.4s ease",
-                  "&:hover": {
-                    filter: "grayscale(0%)",
-                    transform: "scale(1.2) translateY(-5px)",
-                  },
-                }}
+                className="h-[60px] mx-6 grayscale transition-all duration-400 ease-in-out hover:grayscale-0 hover:scale-120 hover:-translate-y-1 block"
               />
-
             ))}
-          </Box>
-        </Box>
-      </Container>
+          </div>
+        </div>
+      </div>
 
       {/* CSS Keyframes */}
       <style>
         {`
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-  `}
+          @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}
       </style>
-
-    </Box>
+    </div>
   );
 }

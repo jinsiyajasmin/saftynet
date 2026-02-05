@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -20,7 +20,6 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import { useNavigate } from "react-router-dom"; // ✅ For navigation
-import { useEffect } from "react";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -59,7 +58,7 @@ function CustomGridIcon(props) {
   );
 }
 
-export default function ISO9001Page() {
+export default function ISO50001Page() {
   const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -93,7 +92,7 @@ export default function ISO9001Page() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-             ISO50001: 2018 Energy Management
+              ISO50001: 2018 Energy Management
             </Typography>
 
             <Typography variant="h4" fontWeight="semibold" sx={{
@@ -102,7 +101,7 @@ export default function ISO9001Page() {
                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
               },
             }}>
-        International Standard for Energy
+              International Standard for Energy
               <br />
               Management Systems
             </Typography>
@@ -118,9 +117,9 @@ export default function ISO9001Page() {
                 },
               }}
             >
-           Implementing energy management is a strategic decision that helps an organisation improve
+              Implementing energy management is a strategic decision that helps an organisation improve
               <br /> its overall framework for optimising energy efficiency and reducing carbon footprint. It
-            <br />provides a foundation for sustainable business development.
+              <br />provides a foundation for sustainable business development.
             </Typography>
 
             <Typography variant="body1" fontWeight="bold" sx={{
@@ -129,7 +128,7 @@ export default function ISO9001Page() {
                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
               },
             }}>
-             If you are looking for a consultant to support you with a new or existing Energy
+              If you are looking for a consultant to support you with a new or existing Energy
               <br /> Management System, Safety Nett can help.
             </Typography>
 
@@ -221,7 +220,7 @@ export default function ISO9001Page() {
                         color: "#0D47A1",// blue from theme (or use "#3b82f6")
                       },
                     }}>
-                     What is ISO50001?
+                      What is ISO50001?
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -231,19 +230,19 @@ export default function ISO9001Page() {
                       color="text.secondary"
                       sx={{ lineHeight: 1.7 }}
                     >
-                  ISO 50001:2018 is the international standard for 
-                  Energy Management Systems (EnMS). It provides a 
-                  comprehensive framework for improving energy performance
-                   and efficiency, fostering a systematic approach to energy 
-                   management. The standard helps public and private sector 
-                   organisations establish, implement, maintain, and improve 
-                   an energy management system that aligns with broader environmental 
-                   goals and regulatory requirements. Certification to ISO 50001
-                    demonstrates an organisation’s commitment to continuous improvement
-                     in energy management practices. This makes it easier to comply 
-                     with relevant legal and regulatory requirements, such as the UK
+                      ISO 50001:2018 is the international standard for
+                      Energy Management Systems (EnMS). It provides a
+                      comprehensive framework for improving energy performance
+                      and efficiency, fostering a systematic approach to energy
+                      management. The standard helps public and private sector
+                      organisations establish, implement, maintain, and improve
+                      an energy management system that aligns with broader environmental
+                      goals and regulatory requirements. Certification to ISO 50001
+                      demonstrates an organisation’s commitment to continuous improvement
+                      in energy management practices. This makes it easier to comply
+                      with relevant legal and regulatory requirements, such as the UK
                       Energy Saving Opportunities Scheme (ESOS). Certified organisations
-                      can also lead by example within their industries, showcasing their 
+                      can also lead by example within their industries, showcasing their
                       dedication to sustainable energy use.
                     </Typography>
                   </AccordionDetails>
@@ -273,7 +272,7 @@ export default function ISO9001Page() {
                         color: "#0D47A1",// blue from theme (or use "#3b82f6")
                       },
                     }}>
-                    Why is ISO50001 important?
+                      Why is ISO50001 important?
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -283,15 +282,15 @@ export default function ISO9001Page() {
                       color="text.secondary"
                       sx={{ lineHeight: 1.7 }}
                     >
-                    • ISO 50001 is recognized worldwide, which helps organizations 
-                    in various sectors align with international best practices 
-                    for energy management. • Compliance with ISO 50001 can facilitate 
-                    adherence to local and international energy-related laws and regulations, 
-                    minimizing the risk of non-compliance. • It underscores a commitment 
-                    to sustainability and environmental responsibility, which can enhance
-                     corporate reputation and stakeholder trust. • The standard establishes 
-                     a basis for the continual enhancement of energy performance, fostering 
-                     a culture of ongoing improvement within the organisation.
+                      • ISO 50001 is recognized worldwide, which helps organizations
+                      in various sectors align with international best practices
+                      for energy management. • Compliance with ISO 50001 can facilitate
+                      adherence to local and international energy-related laws and regulations,
+                      minimizing the risk of non-compliance. • It underscores a commitment
+                      to sustainability and environmental responsibility, which can enhance
+                      corporate reputation and stakeholder trust. • The standard establishes
+                      a basis for the continual enhancement of energy performance, fostering
+                      a culture of ongoing improvement within the organisation.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -336,7 +335,7 @@ export default function ISO9001Page() {
 
                 {/* Title */}
                 <Typography variant="h6" fontWeight="semibold" sx={{ mb: 4 }}>
-                 Energy Management
+                  Energy Management
                   <br />
                   Guides & Checklists
                 </Typography>
@@ -350,7 +349,7 @@ export default function ISO9001Page() {
 
                     <ListItemText color="text.secondary" primary={
                       <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                       ISO50001: 2018 FAQs
+                        ISO50001: 2018 FAQs
                       </Typography>
                     }
                     />
@@ -377,7 +376,7 @@ export default function ISO9001Page() {
                     <ListItemText
                       primary={
                         <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                        ISO50001: 2018 Gap Analysis 
+                          ISO50001: 2018 Gap Analysis
                         </Typography>
                       }
                     />
@@ -390,7 +389,7 @@ export default function ISO9001Page() {
                     <ListItemText
                       primary={
                         <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                         Energy Management Training
+                          Energy Management Training
                         </Typography>
                       }
                     />
@@ -403,7 +402,7 @@ export default function ISO9001Page() {
                     <ListItemText
                       primary={
                         <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                         ISO50001: 2018 Implementation<br /> Guide
+                          ISO50001: 2018 Implementation<br /> Guide
                         </Typography>
                       }
                     />
@@ -416,7 +415,7 @@ export default function ISO9001Page() {
                     <ListItemText
                       primary={
                         <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                         Safety Nett Energy <br />
+                          Safety Nett Energy <br />
                           Management Consultancy <br />
                           Services
                         </Typography>
@@ -474,7 +473,7 @@ export default function ISO9001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                      Cost Reductions
+                            Cost Reductions
                           </Typography>
                         }
                       />
@@ -488,7 +487,7 @@ export default function ISO9001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                           Risk Management
+                            Risk Management
                           </Typography>
                         }
                       />
@@ -502,7 +501,7 @@ export default function ISO9001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                           Employee Engagement
+                            Employee Engagement
                           </Typography>
                         }
                       />
@@ -516,7 +515,7 @@ export default function ISO9001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                          Integration with Other Standards
+                            Integration with Other Standards
                           </Typography>
                         }
                       />
@@ -530,13 +529,13 @@ export default function ISO9001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                         Contribution to Corporate Goals
+                            Contribution to Corporate Goals
                           </Typography>
                         }
                       />
                     </ListItem>
 
-                   
+
                   </List>
                 </Grid>
 
@@ -565,7 +564,7 @@ export default function ISO9001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                           Improved Performance Metrics
+                            Improved Performance Metrics
                           </Typography>
                         }
                       />
@@ -599,7 +598,7 @@ export default function ISO9001Page() {
                       />
                     </ListItem>
 
-                    
+
                   </List>
                 </Grid>
               </Grid>

@@ -4,6 +4,7 @@ import IsoCards from "./IsoCards";
 import CompaniesSection from "./CompaniesSection";
 import Footer from "./Footer";
 import Navbar from "./Navbar";  // ✅ import your Navbar component
+import DotGrid from "./DotGrid";
 
 
 export default function Home() {
@@ -48,8 +49,7 @@ export default function Home() {
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="fixed top-0 left-0 w-full z-50 bg-[#0f1419]/95 backdrop-blur-sm border-b border-gray-800/50"
-          style={{ height: "120px" }}
+          className="fixed top-0 left-0 w-full z-50"
         >
           <Navbar />
         </motion.div>
@@ -80,8 +80,7 @@ export default function Home() {
 
 
         {/* Hero Section */}
-        <main className="px-10 pt-[220px] pb-24 text-center">
-
+        <main className="px-10 pt-[220px] pb-24 text-center relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -128,6 +127,21 @@ export default function Home() {
             </button>
           </motion.div>
         </main>
+
+        {/* DotGrid Animation Layer */}
+        <div className="absolute inset-0 pointer-events-auto z-0" style={{ top: '100px' }}>
+          <DotGrid
+            dotSize={5}
+            gap={15}
+            baseColor="#271E37"
+            activeColor="#5227FF"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
       </div>
 
       {/* ✅ IsoCards is now INSIDE the main return */}

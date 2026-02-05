@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -20,7 +20,6 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import { useNavigate } from "react-router-dom"; // ✅ For navigation
-import { useEffect } from "react";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {

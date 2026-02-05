@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Typography,
@@ -20,7 +20,6 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import { useNavigate } from "react-router-dom"; // ✅ For navigation
-import { useEffect } from "react";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -59,7 +58,7 @@ function CustomGridIcon(props) {
     );
 }
 
-export default function ISO45001View() {
+export default function ISO14001Page() {
     const navigate = useNavigate();
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -234,13 +233,13 @@ export default function ISO45001View() {
                                             sx={{ lineHeight: 1.7 }}
                                         >
                                             ISO 14001 is the internationally recognised standard for environmental
-                                             management systems (EMS). It offers a framework for organisations to develop and 
-                                             implement an EMS while continually improving their environmental performance. By 
-                                             adhering to this standard, organisations can ensure they are taking proactive steps
-                                              to minimise their environmental impact, comply with relevant legal requirements, and
-                                               achieve their environmental goals. The framework encompasses various aspects, from 
-                                               resource usage and waste management to monitoring environmental performance and 
-                                               involving stakeholders in environmental commitments.
+                                            management systems (EMS). It offers a framework for organisations to develop and
+                                            implement an EMS while continually improving their environmental performance. By
+                                            adhering to this standard, organisations can ensure they are taking proactive steps
+                                            to minimise their environmental impact, comply with relevant legal requirements, and
+                                            achieve their environmental goals. The framework encompasses various aspects, from
+                                            resource usage and waste management to monitoring environmental performance and
+                                            involving stakeholders in environmental commitments.
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
@@ -269,7 +268,7 @@ export default function ISO45001View() {
                                                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
                                             },
                                         }}>
-                                           Why is ISO14001 important?
+                                            Why is ISO14001 important?
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -279,19 +278,19 @@ export default function ISO45001View() {
                                             color="text.secondary"
                                             sx={{ lineHeight: 1.7 }}
                                         >
-                                           Organisations have a pivotal role to play in an age of heightened 
-                                           environmental consciousness and increasing global challenges such as 
-                                           climate change, biodiversity loss, and resource depletion. ISO 14001 
-                                           offers a structured approach for businesses to address these pressing
-                                            concerns. By adopting this standard, organisations are committed to 
+                                            Organisations have a pivotal role to play in an age of heightened
+                                            environmental consciousness and increasing global challenges such as
+                                            climate change, biodiversity loss, and resource depletion. ISO 14001
+                                            offers a structured approach for businesses to address these pressing
+                                            concerns. By adopting this standard, organisations are committed to
                                             regulatory compliance and ongoing environmental improvement. This proactive
-                                             approach to environmental management can result in tangible benefits, 
-                                             such as reduced waste, energy conservation, and cost savings. Furthermore,
-                                              it enhances an organisation's reputation, fosters stakeholder trust, and 
-                                              often constitutes a critical step for engaging in global trade and supply 
-                                              chains. Simply put, ISO 14001 stands as a testament to an organisation's
-                                               dedication to a sustainable future, blending environmental responsibility 
-                                               with strategic business growth.
+                                            approach to environmental management can result in tangible benefits,
+                                            such as reduced waste, energy conservation, and cost savings. Furthermore,
+                                            it enhances an organisation's reputation, fosters stakeholder trust, and
+                                            often constitutes a critical step for engaging in global trade and supply
+                                            chains. Simply put, ISO 14001 stands as a testament to an organisation's
+                                            dedication to a sustainable future, blending environmental responsibility
+                                            with strategic business growth.
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
@@ -337,9 +336,9 @@ export default function ISO45001View() {
 
                                 {/* Title */}
                                 <Typography variant="h6" fontWeight="semibold" sx={{ mb: 4 }}>
-                                   Environmental
+                                    Environmental
                                     <br />
-                                   Management Guides and    <br />Checklists
+                                    Management Guides and    <br />Checklists
                                 </Typography>
 
                                 {/* List of items */}
@@ -391,7 +390,7 @@ export default function ISO45001View() {
                                         <ListItemText
                                             primary={
                                                 <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                  Environmental Management <br /> Training
+                                                    Environmental Management <br /> Training
                                                 </Typography>
                                             }
                                         />
@@ -475,7 +474,7 @@ export default function ISO45001View() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                       Enhanced environmental performance
+                                                        Enhanced environmental performance
                                                     </Typography>
                                                 }
                                             />
@@ -509,7 +508,7 @@ export default function ISO45001View() {
                                             />
                                         </ListItem>
 
-  <ListItem disableGutters >
+                                        <ListItem disableGutters >
                                             <ListItemIcon sx={{ minWidth: 28 }}>
                                                 <CustomGridIcon fontSize="small" />
 
@@ -517,7 +516,7 @@ export default function ISO45001View() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                       Stakeholder and customer trust
+                                                        Stakeholder and customer trust
                                                     </Typography>
                                                 }
                                             />
@@ -538,7 +537,7 @@ export default function ISO45001View() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                       Regulatory compliance and adherence to environmental laws and regulations
+                                                        Regulatory compliance and adherence to environmental laws and regulations
                                                     </Typography>
                                                 }
                                             />

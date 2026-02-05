@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import DotGrid from "./DotGrid";
 import {
   AppBar,
   Toolbar,
@@ -19,15 +20,30 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation(); // Get current location
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false); // For mobile services dropdown
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Check if we are on the home page
+  const isHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // If user scrolls down more than 10px, consider it scrolled/sticky
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -178,12 +194,43 @@ export default function Navbar() {
           <AppBar
             position="sticky"
             sx={{
-              backgroundColor: "#0d1117", // dark background
+              backgroundColor: "transparent", // Managed by Box below
               boxShadow: "none",
-              px: 15, // Keep large padding for desktop
+              px: { xs: 2, lg: 15 }, // Responsive padding
             }}
           >
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            {/* 🟦 Background Container (Handles Color + DotGrid) */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#0d1117",
+                zIndex: -1,
+                overflow: "hidden"
+              }}
+            >
+              {/* DotGrid only when NOT scrolled AND on Home Page */}
+              {!isScrolled && isHomePage && (
+                <Box sx={{ position: "absolute", inset: 0, opacity: 1 }}>
+                  <DotGrid
+                    dotSize={5}
+                    gap={15}
+                    baseColor={isScrolled ? "transparent" : "#271E37"}
+                    activeColor="#5227FF"
+                    proximity={120}
+                    shockRadius={250}
+                    shockStrength={5}
+                    resistance={750}
+                    returnDuration={1.5}
+                  />
+                </Box>
+              )}
+            </Box>
+
+            <Toolbar sx={{ display: "flex", justifyContent: "space-between", position: "relative", zIndex: 1 }}>
               {/* Logo */}
               <Box
                 component="img"
@@ -233,11 +280,42 @@ export default function Navbar() {
           <AppBar
             position="sticky"
             sx={{
-              backgroundColor: "#0d1117",
+              backgroundColor: "transparent", // Managed by Box below
               boxShadow: "none",
               top: "64px", // below first navbar
             }}
           >
+            {/* 🟦 Background Container (Handles Color + DotGrid) */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#0d1117",
+                zIndex: -1,
+                overflow: "hidden"
+              }}
+            >
+              {/* DotGrid only when NOT scrolled AND on Home Page */}
+              {!isScrolled && isHomePage && (
+                <Box sx={{ position: "absolute", inset: 0, opacity: 1 }}>
+                  <DotGrid
+                    dotSize={5}
+                    gap={15}
+                    baseColor={isScrolled ? "transparent" : "#271E37"}
+                    activeColor="#5227FF"
+                    proximity={120}
+                    shockRadius={250}
+                    shockStrength={5}
+                    resistance={750}
+                    returnDuration={1.5}
+                  />
+                </Box>
+              )}
+            </Box>
+
             <Toolbar
               sx={{
                 display: "flex",
