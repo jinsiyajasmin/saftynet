@@ -25,7 +25,7 @@ export default function Footer() {
         <Grid
           container
           spacing={4}
-          columnSpacing={6} // adjusted spacing to keep in one row
+          columnSpacing={12} // increased spacing between columns
           alignItems="flex-start"
         >
           {/* Logo + Copyright */}
@@ -119,16 +119,15 @@ export default function Footer() {
             </Stack>
           </Grid>
 
-          {/* Contact (prev Social) */}
+          {/* Social */}
           <Grid item xs={6} sm={3} md={3}>
             <Typography
               variant="subtitle2"
               fontWeight="bold"
               gutterBottom
               color="text.secondary"
-              sx={{ mb: 2 }}
             >
-              CONTACT
+              SOCIAL
             </Typography>
             <Stack spacing={1}>
               <Stack direction="row" alignItems="center" spacing={1}>
