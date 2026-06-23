@@ -25,11 +25,11 @@ export default function Footer() {
         <Grid
           container
           spacing={4}
-          columnSpacing={20} // extra horizontal space
+          columnSpacing={6} // adjusted spacing to keep in one row
           alignItems="flex-start"
         >
           {/* Logo + Copyright */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={3} md={3}>
             <Box sx={{ mb: 2 }}>
               <Box
                 component="img"
@@ -38,7 +38,7 @@ export default function Footer() {
                 sx={{ width: 160, mb: 1 }}
               />
             </Box>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
               © 2025 SafetyNett
             </Typography>
           </Grid>
@@ -119,15 +119,16 @@ export default function Footer() {
             </Stack>
           </Grid>
 
-          {/* Social */}
+          {/* Contact (prev Social) */}
           <Grid item xs={6} sm={3} md={3}>
             <Typography
               variant="subtitle2"
               fontWeight="bold"
               gutterBottom
               color="text.secondary"
+              sx={{ mb: 2 }}
             >
-              SOCIAL
+              CONTACT
             </Typography>
             <Stack spacing={1}>
               <Stack direction="row" alignItems="center" spacing={1}>
@@ -168,14 +169,33 @@ export default function Footer() {
 
         {/* Divider + Bottom Text */}
         <Divider sx={{ mt: 6, mb: 2 }} />
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="left"
-          sx={{ fontSize: "0.875rem" }}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 4,
+          }}
         >
-          All Rights Reserved.
-        </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontSize: "0.875rem", pt: 0.5, whiteSpace: "nowrap" }}
+          >
+            All Rights Reserved.
+          </Typography>
+          <Box sx={{ maxWidth: { xs: "100%", sm: 680 }, textAlign: { xs: "left", sm: "right" } }}>
+            <Stack spacing={1}>
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.825rem", lineHeight: 1.5 }}>
+                Lansbury Estates Ltd, Craven House, Lansbury Estate,<br/> 102 Lower Guildford Rd, Knaphill, Woking, Surrey, GU21 2EP.
+              </Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.75rem", lineHeight: 1.4, display: "block" }}>
+                Registered Office: Craven House, Lansbury Estate, 102 Lower Guildford Rd,<br/> Knaphill, Woking, Surrey GU21 2EP. Registered in England. No 696610.
+              </Typography>
+            </Stack>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );

@@ -87,7 +87,7 @@ export default function Home() {
             transition={{ duration: 1 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6"
           >
-            Your <span className="text-indigo-400">Trusted Partner</span> in ISO Consultancy <br />
+            Your <span className="text-[#6C63FF]">Trusted Partner</span> in ISO Consultancy <br />
             and Business Solutions
           </motion.h1>
 
@@ -108,22 +108,17 @@ export default function Home() {
           >
             {/* Gradient Button */}
             <button className="relative px-8 py-3 rounded-xl text-white font-medium 
-               bg-gradient-to-r from-indigo-500 to-blue-600 
-               shadow-lg shadow-blue-500/30
+               bg-gradient-to-r from-[#6C63FF] to-[#3F3DFF] 
+               shadow-lg shadow-indigo-500/30
                transform transition-transform duration-300
-               hover:scale-105 hover:shadow-xl hover:shadow-blue-500/40">
+               hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/40 cursor-pointer">
               Get a Free Consultation
             </button>
 
             {/* Learn More Button */}
-            <button className="relative px-8 py-3 border border-indigo-400 text-indigo-400 rounded-xl 
-               overflow-hidden group font-medium">
-              <span className="relative z-10">Learn More</span>
-              <span
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
-                 -translate-x-full group-hover:translate-x-full
-                 transition-transform duration-[1500ms] ease-in-out"
-              />
+            <button className="relative px-8 py-3 border border-slate-700 text-slate-300 rounded-xl 
+               font-medium hover:bg-slate-800/40 hover:text-white transition duration-300 cursor-pointer">
+              Learn More
             </button>
           </motion.div>
         </main>
