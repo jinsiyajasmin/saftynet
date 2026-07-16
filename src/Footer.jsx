@@ -189,9 +189,6 @@ export default function Footer() {
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.825rem", lineHeight: 1.5 }}>
                 Unit 17f, The Lansbury Estates, 102 Lower Guildford Road,<br/> Knaphill, Woking, England, GU21 2EP.
               </Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.75rem", lineHeight: 1.4, display: "block" }}>
-                Registered Office: Unit 17f, The Lansbury Estates, 102 Lower Guildford Road,<br/> Knaphill, Woking, England, GU21 2EP. Registered in England. No 696610.
-              </Typography>
             </Stack>
           </Box>
         </Box>
