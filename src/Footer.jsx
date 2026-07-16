@@ -187,10 +187,10 @@ export default function Footer() {
           <Box sx={{ maxWidth: { xs: "100%", sm: 680 }, textAlign: { xs: "left", sm: "right" } }}>
             <Stack spacing={1}>
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.825rem", lineHeight: 1.5 }}>
-                Lansbury Estates Ltd, Craven House, Lansbury Estate,<br/> 102 Lower Guildford Rd, Knaphill, Woking, Surrey, GU21 2EP.
+                Unit 17f, The Lansbury Estates, 102 Lower Guildford Road,<br/> Knaphill, Woking, England, GU21 2EP.
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.75rem", lineHeight: 1.4, display: "block" }}>
-                Registered Office: Craven House, Lansbury Estate, 102 Lower Guildford Rd,<br/> Knaphill, Woking, Surrey GU21 2EP. Registered in England. No 696610.
+                Registered Office: Unit 17f, The Lansbury Estates, 102 Lower Guildford Road,<br/> Knaphill, Woking, England, GU21 2EP. Registered in England. No 696610.
               </Typography>
             </Stack>
           </Box>
