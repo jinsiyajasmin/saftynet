@@ -21,17 +21,38 @@ const fieldSx = {
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
 
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
 
-  const sendEmail = (event) => {
+  const sendEmail = async (event) => {
     event.preventDefault();
-    const subject = `Website enquiry from ${form.name}`;
-    const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    const mailto = `mailto:${contactEmails.direct}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    setStatus("sending");
+    setError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setStatus("error");
+        setError(result.error || "We could not send your message. Please try again.");
+        return;
+      }
+
+      setForm({ name: "", email: "", message: "" });
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+      setError("We could not send your message. Please try again.");
+    }
   };
 
   return (
@@ -119,6 +140,7 @@ export default function ContactPage() {
               <Button
                 type="submit"
                 variant="contained"
+                disabled={status === "sending"}
                 sx={{
                   alignSelf: "flex-start",
                   textTransform: "none",
@@ -129,8 +151,18 @@ export default function ContactPage() {
                   "&:hover": { background: "linear-gradient(90deg, #5a55e0, #2f2cda)" },
                 }}
               >
-                Email SafetyNett
+                {status === "sending" ? "Sending..." : "Send message"}
               </Button>
+              {status === "sent" && (
+                <Typography variant="body2" sx={{ color: "#166534" }}>
+                  Thank you. Your message has been sent and we will reply to your email.
+                </Typography>
+              )}
+              {status === "error" && (
+                <Typography variant="body2" sx={{ color: "#b91c1c" }}>
+                  {error}
+                </Typography>
+              )}
             </Stack>
           </Box>
         </Grid>
