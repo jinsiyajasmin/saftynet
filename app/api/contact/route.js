@@ -1,4 +1,7 @@
+import path from "node:path";
 import nodemailer from "nodemailer";
+
+const LOGO_PATH = path.join(process.cwd(), "public", "email-logo.png");
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -23,28 +26,36 @@ function enquiryHtml({ name, email, message }) {
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f5f7;padding:32px 16px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
+          <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
             <tr>
-              <td style="background:#6C63FF;padding:28px 32px;">
-                <p style="margin:0;color:#ffffff;font-size:13px;letter-spacing:1px;text-transform:uppercase;">SafetyNett</p>
-                <h1 style="margin:8px 0 0;color:#ffffff;font-size:24px;font-weight:700;">New website enquiry</h1>
+              <td style="background:#0d1117;padding:22px 28px;">
+                <img src="cid:safetynett-logo" alt="SafetyNett" width="168" height="36" style="display:block;border:0;height:36px;width:auto;" />
               </td>
             </tr>
             <tr>
-              <td style="padding:28px 32px;">
-                <p style="margin:0 0 20px;color:#4b5563;font-size:15px;line-height:1.6;">Someone sent a message from the SafetyNett contact form.</p>
+              <td style="background:#6C63FF;height:4px;font-size:0;line-height:0;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding:28px 28px 8px;">
+                <p style="margin:0;color:#6C63FF;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;">Contact</p>
+                <h1 style="margin:8px 0 0;color:#0d1117;font-size:24px;font-weight:700;">New website enquiry</h1>
+                <p style="margin:10px 0 0;color:#4b5563;font-size:15px;line-height:1.6;">Someone sent a message from the SafetyNett contact form.</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:12px 28px 28px;">
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;width:110px;">Name</td>
-                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:15px;color:#111827;">${safeName}</td>
+                    <td style="padding:14px 0;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;width:110px;">Name</td>
+                    <td style="padding:14px 0;border-top:1px solid #e5e7eb;font-size:15px;color:#0d1117;">${safeName}</td>
                   </tr>
                   <tr>
-                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;">Email</td>
-                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:15px;"><a href="mailto:${safeEmail}" style="color:#6C63FF;text-decoration:none;">${safeEmail}</a></td>
+                    <td style="padding:14px 0;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;">Email</td>
+                    <td style="padding:14px 0;border-top:1px solid #e5e7eb;font-size:15px;"><a href="mailto:${safeEmail}" style="color:#6C63FF;text-decoration:none;">${safeEmail}</a></td>
                   </tr>
                   <tr>
-                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;font-size:13px;color:#6b7280;vertical-align:top;">Message</td>
-                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;font-size:15px;color:#111827;line-height:1.6;">${safeMessage}</td>
+                    <td style="padding:14px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;font-size:13px;color:#6b7280;vertical-align:top;">Message</td>
+                    <td style="padding:14px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;font-size:15px;color:#0d1117;line-height:1.6;">${safeMessage}</td>
                   </tr>
                 </table>
               </td>
@@ -106,6 +117,13 @@ export async function POST(request) {
       subject: `New enquiry from ${name}`,
       text: `New website enquiry\n\nName: ${name}\nEmail: ${email}\n\n${message}`,
       html: enquiryHtml({ name, email, message }),
+      attachments: [
+        {
+          filename: "email-logo.png",
+          path: LOGO_PATH,
+          cid: "safetynett-logo",
+        },
+      ],
     });
   } catch {
     return Response.json(
