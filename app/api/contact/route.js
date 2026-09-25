@@ -12,11 +12,49 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-function recipients() {
-  return String(process.env.CONTACT_TO || "")
-    .split(",")
-    .map((item) => item.trim())
-    .filter((item) => isValidEmail(item));
+function enquiryHtml({ name, email, message }) {
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeMessage = escapeHtml(message).replace(/\n/g, "<br />");
+
+  return `<!DOCTYPE html>
+<html>
+  <body style="margin:0;padding:0;background:#f4f5f7;font-family:Arial,Helvetica,sans-serif;color:#1a1d23;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f5f7;padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
+            <tr>
+              <td style="background:#6C63FF;padding:28px 32px;">
+                <p style="margin:0;color:#ffffff;font-size:13px;letter-spacing:1px;text-transform:uppercase;">SafetyNett</p>
+                <h1 style="margin:8px 0 0;color:#ffffff;font-size:24px;font-weight:700;">New website enquiry</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 32px;">
+                <p style="margin:0 0 20px;color:#4b5563;font-size:15px;line-height:1.6;">Someone sent a message from the SafetyNett contact form.</p>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;width:110px;">Name</td>
+                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:15px;color:#111827;">${safeName}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;">Email</td>
+                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;font-size:15px;"><a href="mailto:${safeEmail}" style="color:#6C63FF;text-decoration:none;">${safeEmail}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;font-size:13px;color:#6b7280;vertical-align:top;">Message</td>
+                    <td style="padding:12px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;font-size:15px;color:#111827;line-height:1.6;">${safeMessage}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
 }
 
 export async function POST(request) {
@@ -39,52 +77,35 @@ export async function POST(request) {
     return Response.json({ error: "That message is too long. Please shorten it and try again." }, { status: 400 });
   }
 
-  const to = recipients();
   const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT || 587);
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   const from = process.env.SMTP_FROM || user;
+  const recipients = String(process.env.CONTACT_TO || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
 
-  if (!host || !user || !pass || to.length === 0) {
-    return Response.json(
-      { error: "We could not send your message. Please email m.chiweda@safetynett.co.uk directly." },
-      { status: 503 }
-    );
+  if (!host || !user || !pass || !from || recipients.length === 0) {
+    return Response.json({ error: "Email is not set up yet. Please try again later." }, { status: 500 });
   }
 
   const transporter = nodemailer.createTransport({
     host,
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: false,
-    requireTLS: true,
+    port,
+    secure: port === 465,
     auth: { user, pass },
   });
 
-  const safeName = escapeHtml(name);
-  const safeEmail = escapeHtml(email);
-  const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
-
   try {
     await transporter.sendMail({
-      from: `"SafetyNett" <${from}>`,
-      to,
+      from: `SafetyNett <${from}>`,
+      to: recipients,
       replyTo: email,
       subject: `New enquiry from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `
-        <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827">
-          <div style="background:#4f46e5;color:#fff;padding:20px 24px;border-radius:12px 12px 0 0">
-            <p style="margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase">SafetyNett</p>
-            <h1 style="margin:8px 0 0;font-size:22px">New website enquiry</h1>
-          </div>
-          <div style="border:1px solid #e5e7eb;border-top:0;padding:24px;border-radius:0 0 12px 12px">
-            <p style="margin:0 0 8px"><strong>Name</strong><br>${safeName}</p>
-            <p style="margin:0 0 8px"><strong>Email</strong><br><a href="mailto:${safeEmail}">${safeEmail}</a></p>
-            <p style="margin:16px 0 8px"><strong>Message</strong></p>
-            <p style="margin:0;line-height:1.6">${safeMessage}</p>
-          </div>
-        </div>
-      `,
+      text: `New website enquiry\n\nName: ${name}\nEmail: ${email}\n\n${message}`,
+      html: enquiryHtml({ name, email, message }),
     });
   } catch {
     return Response.json(
