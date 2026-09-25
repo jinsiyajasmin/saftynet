@@ -5,7 +5,7 @@ import { contactEmails, pageMetadata, postalAddress, siteName, siteUrl, webPageJ
 
 const title = "Contact";
 const description =
-  "Contact SafetyNett about ISO consultancy and quotations. Email m.chiweda@safetynett.co.uk or no-reply@safetynett.co.uk.";
+  "Contact SafetyNett about ISO consultancy and quotations. Email m.chiweda@safetynett.co.uk.";
 const path = "/contact";
 
 export const metadata = pageMetadata({ title, description, path });
@@ -30,20 +30,12 @@ export default function Page() {
             "@type": "PostalAddress",
             ...postalAddress,
           },
-          contactPoint: [
-            {
-              "@type": "ContactPoint",
-              email: contactEmails.direct,
-              contactType: "customer support",
-              areaServed: "GB",
-            },
-            {
-              "@type": "ContactPoint",
-              email: contactEmails.enquiries,
-              contactType: "enquiries",
-              areaServed: "GB",
-            },
-          ],
+          contactPoint: {
+            "@type": "ContactPoint",
+            email: contactEmails.direct,
+            contactType: "customer support",
+            areaServed: "GB",
+          },
         }}
       />
       <IsoPageShell>

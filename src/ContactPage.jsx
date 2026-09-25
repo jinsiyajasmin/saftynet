@@ -30,7 +30,7 @@ export default function ContactPage() {
     event.preventDefault();
     const subject = `Website enquiry from ${form.name}`;
     const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
-    const mailto = `mailto:${contactEmails.direct}?cc=${encodeURIComponent(contactEmails.enquiries)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailto = `mailto:${contactEmails.direct}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailto;
   };
 
@@ -49,8 +49,7 @@ export default function ContactPage() {
           </Typography>
 
           <Stack spacing={2}>
-            <EmailCard label="Direct contact" email={contactEmails.direct} />
-            <EmailCard label="Enquiries" email={contactEmails.enquiries} />
+            <EmailCard label="Email" email={contactEmails.direct} />
             <Box
               sx={{
                 p: 2.5,

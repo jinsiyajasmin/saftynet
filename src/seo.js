@@ -18,7 +18,6 @@ export const products = [
 
 export const contactEmails = {
   direct: "m.chiweda@safetynett.co.uk",
-  enquiries: "no-reply@safetynett.co.uk",
 };
 
 export const postalAddress = {

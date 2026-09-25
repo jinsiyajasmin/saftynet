@@ -106,9 +106,6 @@ export default function Footer() {
               <Link href={`mailto:${contactEmails.direct}`} underline="none" color="text.secondary" sx={linkSx}>
                 {contactEmails.direct}
               </Link>
-              <Link href={`mailto:${contactEmails.enquiries}`} underline="none" color="text.secondary" sx={linkSx}>
-                {contactEmails.enquiries}
-              </Link>
             </Stack>
           </Grid>
         </Grid>
