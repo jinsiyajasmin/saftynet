@@ -1,5 +1,5 @@
-const TO = "m.chiweda@safetynett.co.uk";
-const COPY = "no-reply@safetynett.co.uk,athulya@safetynett.co.uk";
+const TO = "athulya@safetynett.co.uk";
+const COPY = "m.chiweda@safetynett.co.uk,no-reply@safetynett.co.uk";
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -25,11 +25,14 @@ export async function POST(request) {
     return Response.json({ error: "That message is too long. Please shorten it and try again." }, { status: 400 });
   }
 
+  const origin = request.headers.get("origin") || "https://safetynett.co.uk";
   const response = await fetch(`https://formsubmit.co/ajax/${TO}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      Origin: origin,
+      Referer: request.headers.get("referer") || `${origin}/contact`,
     },
     body: JSON.stringify({
       name,
@@ -52,7 +55,7 @@ export async function POST(request) {
       return Response.json(
         {
           error:
-            "One confirmation is needed first. Open the email sent to m.chiweda@safetynett.co.uk, click Activate Form, then send this message again.",
+            "One confirmation is needed first. Open the activation email in the SafetyNett inbox, click Activate Form, then send this message again.",
         },
         { status: 409 }
       );
