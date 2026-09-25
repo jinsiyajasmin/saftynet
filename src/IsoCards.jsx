@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Box,
@@ -12,7 +14,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";  // <-- import
+import { useRouter } from "next/navigation";
 
 const isoData = [
   {
@@ -65,10 +67,11 @@ const isoData = [
 ];
 
 export default function IsoCards() {
-  const navigate = useNavigate(); // <-- hook for navigation
+  const router = useRouter();
+  const navigate = (path) => router.push(path);
 
   return (
-    <Box sx={{ py: { xs: 6, md: 10 }, px: { xs: 2, md: 6 } }}>
+    <Box id="iso-standards" sx={{ py: { xs: 6, md: 10 }, px: { xs: 2, md: 6 }, scrollMarginTop: "96px" }}>
       {/* Heading */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}

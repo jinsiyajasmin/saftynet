@@ -1,18 +1,20 @@
+"use client";
+
 import React from "react";
 
 const companies = [
-  { name: "Google", logo: "/fujitec.png" },
-  { name: "Microsoft", logo: "/Deltron.png" },
-  { name: "Amazon", logo: "/Construct_Lifts.png" },
-  { name: "Netflix", logo: "/Adstone.png" },
-  { name: "Apple", logo: "/onision.png" },
-  { name: "Apple", logo: "/ICRIT.png" },
-  { name: "Apple", logo: "/Stannah.png" },
-  { name: "Apple", logo: "/Peerless.png" },
-  { name: "Apple", logo: "/Mitsubishi.png" },
-  { name: "Apple", logo: "/Low.png" },
-  { name: "Apple", logo: "/Lift.png" },
-  { name: "Apple", logo: "/Ardo_Lifts.png" },
+  { name: "Fujitec", logo: "/fujitec.png" },
+  { name: "Deltron", logo: "/Deltron.png" },
+  { name: "Construct Lifts", logo: "/Construct_Lifts.png" },
+  { name: "Adstone", logo: "/Adstone.png" },
+  { name: "Onision", logo: "/onision.png" },
+  { name: "ICRIT", logo: "/ICRIT.png" },
+  { name: "Stannah", logo: "/Stannah.png" },
+  { name: "Peerless", logo: "/Peerless.png" },
+  { name: "Mitsubishi", logo: "/Mitsubishi.png" },
+  { name: "Low", logo: "/Low.png" },
+  { name: "Lift", logo: "/Lift.png" },
+  { name: "Ardo Lifts", logo: "/Ardo_Lifts.png" },
 ];
 
 export default function CompaniesSection() {

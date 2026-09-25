@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import DotGrid from "./DotGrid";
 import {
@@ -20,24 +22,49 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate, useLocation } from "react-router-dom"; // Added useLocation
+import NextLink from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { products } from "./seo";
+
+const services = [
+  { label: "ISO9001: 2015 Quality Management", route: "/iso9001" },
+  { label: "ISO14001: 2015 Environmental Management", route: "/iso14001" },
+  { label: "ISO45001: 2018 Occupational Health & Safety", route: "/iso45001" },
+  { label: "ISO50001: 2018 Energy Management", route: "/iso50001" },
+  { label: "ISO27001: 2022 Information Security Management", route: "/iso27001" },
+  { label: "ISO14068: 2023 Climate Change Management", route: "/iso14068" },
+];
+
+const quoteButtonSx = {
+  textTransform: "none",
+  borderRadius: "10px",
+  px: 3,
+  py: 1,
+  fontWeight: 500,
+  background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+  "&:hover": {
+    background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+  },
+};
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const location = useLocation(); // Get current location
+  const router = useRouter();
+  const navigate = (path) => router.push(path);
+  const pathname = usePathname();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
   const [anchorEl, setAnchorEl] = useState(null);
+  const [productsAnchor, setProductsAnchor] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false); // For mobile services dropdown
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Check if we are on the home page
-  const isHomePage = location.pathname === "/";
+  const isHomePage = pathname === "/";
+  const onServices = pathname.startsWith("/iso");
+  const onContact = pathname === "/contact";
 
   useEffect(() => {
     const handleScroll = () => {
-      // If user scrolls down more than 10px, consider it scrolled/sticky
       setIsScrolled(window.scrollY > 10);
     };
 
@@ -45,350 +72,202 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
+  const go = (path) => {
+    navigate(path);
+    setMobileOpen(false);
     setAnchorEl(null);
+    setProductsAnchor(null);
   };
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const handleMobileServicesToggle = () => {
-    setServicesOpen(!servicesOpen);
-  };
-
-  const services = [
-    { label: "ISO9001: 2015 Quality Management", route: "/iso9001" },
-    { label: "ISO14001: 2015 Environmental Management", route: "/iso14001" },
-    { label: "ISO45001: 2018 Occupational Health & Safety", route: "/iso45001" },
-    { label: "ISO50001: 2018 Energy Management", route: "/iso50001" },
-    { label: "ISO27001: 2022 Information Security Management", route: "/iso27001" },
-    { label: "ISO14068: 2023 Climate Change Management", route: "/iso14068" },
-  ];
-
-  const navLinks = [
-    "ISO Management System",
-    "NettForm App",
-    "Competent Person & SSIP",
-    "Audits & Inspections",
-    "Training",
-    "Resources",
-    "About Us",
-  ];
-
-  // Mobile Drawer Content
   const drawer = (
     <Box sx={{ width: 280, bgcolor: "#1a1d23", height: "100%", color: "white", p: 2 }}>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-        <IconButton onClick={handleDrawerToggle} sx={{ color: "white" }}>
+        <IconButton onClick={() => setMobileOpen(false)} sx={{ color: "white" }} aria-label="Close menu">
           <CloseIcon />
         </IconButton>
       </Box>
       <List>
         <ListItem disablePadding sx={{ mb: 2 }}>
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={() => {
-              navigate("/quote"); // Assuming route, adjust if needed
-              handleDrawerToggle();
-            }}
-            sx={{
-              textTransform: "none",
-              borderRadius: "10px",
-              py: 1,
-              fontWeight: 500,
-              background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
-              "&:hover": {
-                background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
-              },
-            }}
-          >
+          <Button fullWidth component={NextLink} href="/contact" variant="contained" onClick={() => setMobileOpen(false)} sx={quoteButtonSx}>
             Get a Quote
           </Button>
         </ListItem>
 
-        {/* Services Dropdown in Mobile */}
-        <ListItem disablePadding onClick={handleMobileServicesToggle} sx={{ cursor: "pointer", flexDirection: "column", alignItems: "flex-start" }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', py: 1, px: 1 }}>
-            <Typography sx={{ fontWeight: 500 }}>Services</Typography>
+        <ListItem
+          disablePadding
+          onClick={() => setServicesOpen((open) => !open)}
+          sx={{ cursor: "pointer", flexDirection: "column", alignItems: "flex-start" }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", py: 1, px: 1 }}>
+            <Typography sx={{ fontWeight: 500, color: onServices ? "white" : "inherit" }}>Services</Typography>
             <Typography>{servicesOpen ? "-" : "+"}</Typography>
           </Box>
-          <Collapse in={servicesOpen} timeout="auto" unmountOnExit sx={{ width: '100%' }}>
+          <Collapse in={servicesOpen} timeout="auto" unmountOnExit sx={{ width: "100%" }}>
             <List component="div" disablePadding>
               {services.map((service) => (
-                <ListItem key={service.route} button onClick={() => { navigate(service.route); handleDrawerToggle(); }} sx={{ pl: 3 }}>
-                  <ListItemText primary={service.label} primaryTypographyProps={{ fontSize: 13, color: '#ccc' }} />
-                </ListItem>
+                <ListItemButton
+                  key={service.route}
+                  onClick={() => go(service.route)}
+                  sx={{ pl: 3 }}
+                >
+                  <ListItemText
+                    primary={service.label}
+                    primaryTypographyProps={{ fontSize: 13, color: pathname === service.route ? "#fff" : "#ccc" }}
+                  />
+                </ListItemButton>
               ))}
             </List>
           </Collapse>
         </ListItem>
 
-        {navLinks.map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={() => { navigate(`/${text.toLowerCase().replace(/ /g, '-')}`); handleDrawerToggle(); }}>
-              <ListItemText primary={text} />
+        {products.map((product) => (
+          <ListItem key={product.href} disablePadding>
+            <ListItemButton
+              component="a"
+              href={product.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+            >
+              <ListItemText primary={product.name} />
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => { handleDrawerToggle(); }}>
-            <ListItemText primary="iAudit Global" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => { handleDrawerToggle(); }}>
-            <ListItemText primary="Search" />
-          </ListItemButton>
-        </ListItem>
 
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => go("/contact")} selected={onContact}>
+            <ListItemText primary="Contact" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
 
   return (
     <>
-      {/* Mobile Navbar */}
       {isMobile ? (
         <AppBar position="sticky" sx={{ backgroundColor: "#0d1117", boxShadow: "none", px: 2 }}>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box
               component="img"
               src="/Logo1.png"
-              alt="Logo"
+              alt="SafetyNett"
               onClick={() => navigate("/")}
               sx={{ height: 24, cursor: "pointer" }}
             />
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-            >
+            <IconButton color="inherit" aria-label="Open menu" edge="start" onClick={() => setMobileOpen(true)}>
               <MenuIcon />
             </IconButton>
           </Toolbar>
           <Drawer
             anchor="right"
             open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-            sx={{
-              "& .MuiDrawer-paper": { backgroundColor: "#1a1d23" }
-            }}
+            onClose={() => setMobileOpen(false)}
+            ModalProps={{ keepMounted: true }}
+            sx={{ "& .MuiDrawer-paper": { backgroundColor: "#1a1d23" } }}
           >
             {drawer}
           </Drawer>
         </AppBar>
       ) : (
-        /* Desktop Navbar */
-        <>
-          {/* Top Navbar */}
-          <AppBar
-            position="sticky"
+        <AppBar
+          position="sticky"
+          sx={{
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            px: { xs: 2, lg: 15 },
+          }}
+        >
+          <Box
             sx={{
-              backgroundColor: "transparent", // Managed by Box below
-              boxShadow: "none",
-              px: { xs: 2, lg: 15 }, // Responsive padding
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#0d1117",
+              zIndex: -1,
+              overflow: "hidden",
             }}
           >
-            {/* 🟦 Background Container (Handles Color + DotGrid) */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#0d1117",
-                zIndex: -1,
-                overflow: "hidden"
-              }}
-            >
-              {/* DotGrid only when NOT scrolled AND on Home Page */}
-              {!isScrolled && isHomePage && (
-                <Box sx={{ position: "absolute", inset: 0, opacity: 1 }}>
-                  <DotGrid
-                    dotSize={5}
-                    gap={15}
-                    baseColor={isScrolled ? "transparent" : "#271E37"}
-                    activeColor="#5227FF"
-                    proximity={120}
-                    shockRadius={250}
-                    shockStrength={5}
-                    resistance={750}
-                    returnDuration={1.5}
-                  />
-                </Box>
-              )}
-            </Box>
-
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between", position: "relative", zIndex: 1 }}>
-              {/* Logo */}
-              <Box
-                component="img"
-                src="/Logo1.png"
-                alt="Logo"
-                onClick={() => navigate("/")} // 👈 navigate to home
-                sx={{ height: 28, cursor: "pointer" }}
-              />
-
-              {/* Right Menu */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-                <Typography
-                  variant="body2"
-                  sx={{ color: "grey", cursor: "pointer", "&:hover": { color: "white" } }}
-                >
-                  iAudit Global
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: "grey", cursor: "pointer", "&:hover": { color: "white" } }}
-                >
-                  Search
-                </Typography>
-
-                {/* CTA Button */}
-                <Button
-                  variant="contained"
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: "10px",
-                    px: 3,
-                    py: 1,
-                    fontWeight: 500,
-                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
-                    "&:hover": {
-                      background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
-                    },
-                  }}
-                >
-                  Get a Quote
-                </Button>
+            {!isScrolled && isHomePage && (
+              <Box sx={{ position: "absolute", inset: 0, opacity: 1 }}>
+                <DotGrid
+                  dotSize={5}
+                  gap={15}
+                  baseColor="#271E37"
+                  activeColor="#5227FF"
+                  proximity={120}
+                  shockRadius={250}
+                  shockStrength={5}
+                  resistance={750}
+                  returnDuration={1.5}
+                />
               </Box>
-            </Toolbar>
-          </AppBar>
+            )}
+          </Box>
 
-          {/* Secondary Navbar */}
-          <AppBar
-            position="sticky"
-            sx={{
-              backgroundColor: "transparent", // Managed by Box below
-              boxShadow: "none",
-              top: "64px", // below first navbar
-            }}
-          >
-            {/* 🟦 Background Container (Handles Color + DotGrid) */}
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between", position: "relative", zIndex: 1, gap: 3 }}>
             <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                backgroundColor: "#0d1117",
-                zIndex: -1,
-                overflow: "hidden"
-              }}
-            >
-              {/* DotGrid only when NOT scrolled AND on Home Page */}
-              {!isScrolled && isHomePage && (
-                <Box sx={{ position: "absolute", inset: 0, opacity: 1 }}>
-                  <DotGrid
-                    dotSize={5}
-                    gap={15}
-                    baseColor={isScrolled ? "transparent" : "#271E37"}
-                    activeColor="#5227FF"
-                    proximity={120}
-                    shockRadius={250}
-                    shockStrength={5}
-                    resistance={750}
-                    returnDuration={1.5}
-                  />
-                </Box>
-              )}
-            </Box>
+              component="img"
+              src="/Logo1.png"
+              alt="SafetyNett"
+              onClick={() => navigate("/")}
+              sx={{ height: 28, cursor: "pointer" }}
+            />
 
-            <Toolbar
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                gap: 6,
-              }}
-            >
-              {/* Services with dropdown */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
               <Typography
                 variant="body2"
                 aria-controls="services-menu"
                 aria-haspopup="true"
-                onMouseEnter={handleOpen}
+                onMouseEnter={(event) => {
+                  setProductsAnchor(null);
+                  setAnchorEl(event.currentTarget);
+                }}
                 sx={{
-                  color: Boolean(anchorEl) ? "white" : "gray",
+                  color: Boolean(anchorEl) || onServices ? "white" : "gray",
                   cursor: "pointer",
                   fontWeight: 500,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 0.5,
                   "&:hover": { color: "white" },
                 }}
               >
                 Services
-
               </Typography>
-
 
               <Menu
                 id="services-menu"
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
+                onClose={() => setAnchorEl(null)}
                 MenuListProps={{
-                  onMouseLeave: handleClose,
-                  sx: {
-                    px: 1,
-                  },
+                  onMouseLeave: () => setAnchorEl(null),
+                  sx: { px: 1 },
                 }}
                 PaperProps={{
                   elevation: 3,
                   sx: {
                     mt: 1,
                     borderRadius: 2,
-                    minWidth: 260,
-                    backgroundColor: "#1a1d23", // dark theme
+                    minWidth: 280,
+                    backgroundColor: "#1a1d23",
                     color: "white",
                   },
                 }}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "center",
-                }}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
               >
                 {services.map((service) => (
                   <MenuItem
                     key={service.route}
-                    onClick={() => {
-                      navigate(service.route);
-                      handleClose();
-                    }}
+                    onClick={() => go(service.route)}
+                    selected={pathname === service.route}
                     sx={{
                       fontSize: 14,
                       fontWeight: 500,
                       py: 1.2,
                       borderRadius: 1,
-                      "&:hover": {
-                        backgroundColor: "rgba(255,255,255,0.08)",
-                      },
+                      "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
                     }}
                   >
                     {service.label}
@@ -396,25 +275,90 @@ export default function Navbar() {
                 ))}
               </Menu>
 
+              <Typography
+                variant="body2"
+                aria-controls="products-menu"
+                aria-haspopup="true"
+                onMouseEnter={(event) => {
+                  setAnchorEl(null);
+                  setProductsAnchor(event.currentTarget);
+                }}
+                sx={{
+                  color: productsAnchor ? "white" : "gray",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  "&:hover": { color: "white" },
+                }}
+              >
+                Products
+              </Typography>
 
-              {/* Other Nav Links */}
-              {navLinks.map((item) => (
-                <Typography
-                  key={item}
-                  variant="body2"
-                  sx={{
-                    color: "gray",
-                    cursor: "pointer",
-                    fontWeight: 500,
-                    "&:hover": { color: "white" },
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-            </Toolbar>
-          </AppBar>
-        </>
+              <Menu
+                id="products-menu"
+                anchorEl={productsAnchor}
+                open={Boolean(productsAnchor)}
+                onClose={() => setProductsAnchor(null)}
+                MenuListProps={{
+                  onMouseLeave: () => setProductsAnchor(null),
+                  sx: { px: 1 },
+                }}
+                PaperProps={{
+                  elevation: 3,
+                  sx: {
+                    mt: 1,
+                    borderRadius: 2,
+                    minWidth: 220,
+                    backgroundColor: "#1a1d23",
+                    color: "white",
+                  },
+                }}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
+              >
+                {products.map((product) => (
+                  <MenuItem
+                    key={product.href}
+                    component="a"
+                    href={product.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setProductsAnchor(null)}
+                    sx={{
+                      fontSize: 14,
+                      fontWeight: 500,
+                      py: 1.2,
+                      borderRadius: 1,
+                      color: "inherit",
+                      textDecoration: "none",
+                      "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
+                    }}
+                  >
+                    {product.name}
+                  </MenuItem>
+                ))}
+              </Menu>
+
+              <Typography
+                component={NextLink}
+                href="/contact"
+                variant="body2"
+                sx={{
+                  color: onContact ? "white" : "gray",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  textDecoration: "none",
+                  "&:hover": { color: "white" },
+                }}
+              >
+                Contact
+              </Typography>
+            </Box>
+
+            <Button component={NextLink} href="/contact" variant="contained" sx={quoteButtonSx}>
+              Get a Quote
+            </Button>
+          </Toolbar>
+        </AppBar>
       )}
     </>
   );

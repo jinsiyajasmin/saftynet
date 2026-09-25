@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 // InertiaPlugin removed for Vercel compatibility (requires premium license)

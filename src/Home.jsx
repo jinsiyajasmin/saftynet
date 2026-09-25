@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+"use client";
+
+import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import IsoCards from "./IsoCards";
+import ProductsSection from "./ProductsSection";
 import CompaniesSection from "./CompaniesSection";
 import Footer from "./Footer";
-import Navbar from "./Navbar";  // ✅ import your Navbar component
+import Navbar from "./Navbar";
 import DotGrid from "./DotGrid";
 
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(true);
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
 
 
@@ -55,32 +56,8 @@ export default function Home() {
         </motion.div>
 
 
-        {/* 🔹 Mobile Menu (kept for now) */}
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="md:hidden flex flex-col items-center bg-blue-800 py-4 gap-4"
-          >
-            <a href="#">Services</a>
-            <a href="#">ISO Management System</a>
-            <a href="#">NettForm App</a>
-            <a href="#">Competent Person & SSIP</a>
-            <a href="#">Audits & Inspections</a>
-            <a href="#">Training</a>
-            <a href="#">Resources</a>
-            <a href="#">About Us</a>
-            <button className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition">
-              Get a Quote
-            </button>
-          </motion.div>
-        )}
-
-
-
         {/* Hero Section */}
-        <main className="px-10 pt-[220px] pb-24 text-center relative z-10">
+        <main className="px-10 pt-[160px] pb-24 text-center relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,24 +84,28 @@ export default function Home() {
             className="flex gap-4 flex-wrap justify-center"
           >
             {/* Gradient Button */}
-            <button className="relative px-8 py-3 rounded-xl text-white font-medium 
+            <Link
+              href="/contact"
+              className="relative z-20 px-8 py-3 rounded-xl text-white font-medium 
                bg-gradient-to-r from-[#6C63FF] to-[#3F3DFF] 
                shadow-lg shadow-indigo-500/30
                transform transition-transform duration-300
                hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/40 cursor-pointer">
               Get a Free Consultation
-            </button>
+            </Link>
 
-            {/* Learn More Button */}
-            <button className="relative px-8 py-3 border border-slate-700 text-slate-300 rounded-xl 
+            <button
+              type="button"
+              onClick={() => document.getElementById("iso-standards")?.scrollIntoView({ behavior: "smooth" })}
+              className="relative z-20 px-8 py-3 border border-slate-700 text-slate-300 rounded-xl 
                font-medium hover:bg-slate-800/40 hover:text-white transition duration-300 cursor-pointer">
-              Learn More
+              View ISO Standards
             </button>
           </motion.div>
         </main>
 
         {/* DotGrid Animation Layer */}
-        <div className="absolute inset-0 pointer-events-auto z-0" style={{ top: '100px' }}>
+        <div className="absolute inset-0 pointer-events-none z-0" style={{ top: '100px' }}>
           <DotGrid
             dotSize={5}
             gap={15}
@@ -141,6 +122,7 @@ export default function Home() {
 
       {/* ✅ IsoCards is now INSIDE the main return */}
       <IsoCards />
+      <ProductsSection />
       <CompaniesSection />
       <Footer />
 

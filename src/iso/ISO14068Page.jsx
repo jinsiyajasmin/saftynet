@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import {
     Box,
@@ -16,10 +18,10 @@ import {
     IconButton,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
-import { useNavigate } from "react-router-dom"; // ✅ For navigation
+import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -58,8 +60,9 @@ function CustomGridIcon(props) {
     );
 }
 
-export default function ISO14001Page() {
-    const navigate = useNavigate();
+export default function ISO14068Page() {
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -92,8 +95,7 @@ export default function ISO14001Page() {
                                 fontFamily: "Inter, sans-serif",
                             }}
                         >
-                            ISO14001: 2015 Environmental Management
-
+                            ISO14068: 2023 Climate Change Management
                         </Typography>
 
                         <Typography variant="h4" fontWeight="semibold" sx={{
@@ -102,9 +104,10 @@ export default function ISO14001Page() {
                                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
                             },
                         }}>
-                            International Standard for
+                            International Standard for Climate Change
                             <br />
-                            Environmental Management Systems
+                            Management – Transition to net zero. Part 1:
+                            <br />Carbon Neutrality
                         </Typography>
 
                         <Typography
@@ -118,10 +121,9 @@ export default function ISO14001Page() {
                                 },
                             }}
                         >
-                            Implementing an EMS is a strategic decision that helps an organisation
-                            <br /> control its environmental aspects, reduce impacts and ensure legal
-                            <br />
-                            compliance.
+                            The implementation of a Climate Change Management System is a strategic decision that
+                            <br /> helps an organisation with the transition to net zero and Carbon Neutrality and provides a
+                            <br />foundation basis for sustainable business development.
                         </Typography>
 
                         <Typography variant="body1" fontWeight="bold" sx={{
@@ -130,44 +132,28 @@ export default function ISO14001Page() {
                                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
                             },
                         }}>
-                            If you are looking for a consultant to support you with a new or existing
-                            <br /> Environmental Management System, Safety Nett can help.
+                            If you are looking for a consultant to support you with a new or existing Climate Change
+                            <br /> Management System, Safety Nett can help.
                         </Typography>
 
                         <Box sx={{ display: "flex", gap: 2 }}>
                             <Button
-                                variant="contained"
-                                sx={{
-                                    textTransform: "none",
-                                    borderRadius: "10px",
-                                    px: 3,
-                                    py: 1.2,
-                                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
-                                    "&:hover": {
-                                        background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
-                                    },
-                                }}
-                            >
-                                Book Training Course
-                            </Button>
-
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    textTransform: "none",
-                                    borderRadius: "10px",
-                                    px: 3,
-                                    py: 1.2,
-                                    color: "#6C63FF",
-                                    borderColor: "#6C63FF",
-                                    "&:hover": {
-                                        backgroundColor: "#f5f3ff",
-                                        borderColor: "#6C63FF",
-                                    },
-                                }}
-                            >
-                                Get a quote
-                            </Button>
+                variant="contained"
+                component={NextLink}
+                href="/contact"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  px: 3,
+                  py: 1.2,
+                  background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                  },
+                }}
+              >
+                Get a quote
+              </Button>
                         </Box>
                     </Grid>
 
@@ -175,13 +161,14 @@ export default function ISO14001Page() {
                     <Grid item xs={12} md={6}>
                         <Box
                             component="img"
-                            src="/ISO14001.svg"
+                            src="/ISO14068.svg"
                             alt="ISO9001"
                             sx={{
-                                width: "250%",
+                                width: "150%",
                                 maxWidth: 1200,
                                 height: "auto",
                                 display: "block",
+                                pointerEvents: "none",
                                 mx: "auto",
                                 transition: "transform 0.5s ease", // smooth animation
                                 "&:hover": {
@@ -190,6 +177,7 @@ export default function ISO14001Page() {
                             }}
                         />
                     </Grid>
+
                 </Grid>
 
                 {/* FAQ + Guides Section */}
@@ -211,7 +199,6 @@ export default function ISO14001Page() {
                                     "&:hover": {
                                         borderColor: "#6C63FF",
                                     },
-
                                 }}
                             >
                                 <Accordion defaultExpanded elevation={0} sx={{ boxShadow: "none" }}>
@@ -222,7 +209,7 @@ export default function ISO14001Page() {
                                                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
                                             },
                                         }}>
-                                            What is ISO14001?
+                                            What is ISO14068?
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -232,14 +219,20 @@ export default function ISO14001Page() {
                                             color="text.secondary"
                                             sx={{ lineHeight: 1.7 }}
                                         >
-                                            ISO 14001 is the internationally recognised standard for environmental
-                                            management systems (EMS). It offers a framework for organisations to develop and
-                                            implement an EMS while continually improving their environmental performance. By
-                                            adhering to this standard, organisations can ensure they are taking proactive steps
-                                            to minimise their environmental impact, comply with relevant legal requirements, and
-                                            achieve their environmental goals. The framework encompasses various aspects, from
-                                            resource usage and waste management to monitoring environmental performance and
-                                            involving stakeholders in environmental commitments.
+                                            ISO 14068 is an international standard that outlines principles,
+                                            requirements, and guidance for organisations seeking to achieve
+                                            and demonstrate carbon neutrality. This standard systematically
+                                            quantifies, reduces, and offsets greenhouse gas (GHG) emissions
+                                            throughout the entire value chain. It utilises a hierarchical
+                                            framework that prioritises: • Direct GHG Emission Reductions-
+                                            urging organisations to prioritise the reduction of their own
+                                            emissions first. • Indirect GHG Emission Reductions - addressing
+                                            emissions related to their value chain, including both upstream
+                                            and downstream activities. • Carbon Offsetting - implementing
+                                            offsetting measures as a subsequent strategy, only after maximising
+                                            both direct and indirect emissions reductions.
+
+
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
@@ -268,7 +261,7 @@ export default function ISO14001Page() {
                                                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
                                             },
                                         }}>
-                                            Why is ISO14001 important?
+                                            Why is ISO14068 important?
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -278,19 +271,19 @@ export default function ISO14001Page() {
                                             color="text.secondary"
                                             sx={{ lineHeight: 1.7 }}
                                         >
-                                            Organisations have a pivotal role to play in an age of heightened
-                                            environmental consciousness and increasing global challenges such as
-                                            climate change, biodiversity loss, and resource depletion. ISO 14001
-                                            offers a structured approach for businesses to address these pressing
-                                            concerns. By adopting this standard, organisations are committed to
-                                            regulatory compliance and ongoing environmental improvement. This proactive
-                                            approach to environmental management can result in tangible benefits,
-                                            such as reduced waste, energy conservation, and cost savings. Furthermore,
-                                            it enhances an organisation's reputation, fosters stakeholder trust, and
-                                            often constitutes a critical step for engaging in global trade and supply
-                                            chains. Simply put, ISO 14001 stands as a testament to an organisation's
-                                            dedication to a sustainable future, blending environmental responsibility
-                                            with strategic business growth.
+                                            • It supports organisations and entities committed to achieving
+                                            carbon neutrality and guides them through the complexities of
+                                            emission reduction strategies and obligations. • The standard
+                                            aligns with global efforts to promote sustainable development
+                                            and mitigate climate change by facilitating the transition to
+                                            low GHG emission activities. • It ensures that efforts toward
+                                            carbon neutrality are grounded in robust scientific principles,
+                                            making claims about carbon neutrality true, fair, and credible.
+                                            • Promotes transparency in how organisations communicate their
+                                            carbon neutrality status to stakeholders. • ISO 14068 provides a
+                                            consistent methodology for reporting and verifying carbon neutrality
+                                            efforts, aiding in comparability across organisations and sectors.
+
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
@@ -327,104 +320,35 @@ export default function ISO14001Page() {
                                         fontSize: "14px",
                                         fontWeight: 500,
                                         mb: 4,
-
                                     }}
                                 >
-                                    <AccessTimeIcon sx={{ fontSize: 18, mr: 1 }} />
-                                    Guides & Checklists
-                                </Box>
+                                    <CustomChatIcon sx={{ fontSize: 18, mr: 1 }} />
+                  Get in touch
+                </Box>
 
-                                {/* Title */}
-                                <Typography variant="h6" fontWeight="semibold" sx={{ mb: 4 }}>
-                                    Environmental
-                                    <br />
-                                    Management Guides and    <br />Checklists
-                                </Typography>
-
-                                {/* List of items */}
-                                <List sx={{ p: 0 }} >
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-
-                                        <ListItemText color="text.secondary" primary={
-                                            <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                ISO14001: 2015 FAQs
-                                            </Typography>
-                                        }
-                                        />
-
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    IMS Annex SL Comparison  <br /> Tool
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    ISO14001: 2015 Gap Analysis
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomChatIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    Environmental Management <br /> Training
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    ISO14001: 2015  <br />  Implementation Guide
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters>
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomChatIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    Safety Nett Environmental<br />
-                                                    Management Consultancy <br />
-                                                    Services
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                </List>
+                <Typography variant="h6" fontWeight="semibold" sx={{ mb: 2 }}>
+                  Talk to SafetyNett
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.7 }}>
+                  Tell us what you need for this standard. We will reply by email.
+                </Typography>
+                <Button
+                  variant="contained"
+                  component={NextLink}
+                href="/contact"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    px: 3,
+                    py: 1.2,
+                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                    },
+                  }}
+                >
+                  Contact us
+                </Button>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -474,7 +398,8 @@ export default function ISO14001Page() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Enhanced environmental performance
+
+                                                        Genuine Carbon Neutrality [focused on substantial emission <br /> reductions over reliance on offsets]
                                                     </Typography>
                                                 }
                                             />
@@ -488,7 +413,7 @@ export default function ISO14001Page() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Reducing risk of fines and legal issues
+                                                        Promotes ambitious, science-based GHG emission reduction strategies
                                                     </Typography>
                                                 }
                                             />
@@ -502,25 +427,14 @@ export default function ISO14001Page() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Cost savings
+                                                        Market Differentiation in a competitive marketplace
                                                     </Typography>
                                                 }
                                             />
                                         </ListItem>
 
-                                        <ListItem disableGutters >
-                                            <ListItemIcon sx={{ minWidth: 28 }}>
-                                                <CustomGridIcon fontSize="small" />
 
-                                            </ListItemIcon>
-                                            <ListItemText
-                                                primary={
-                                                    <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Stakeholder and customer trust
-                                                    </Typography>
-                                                }
-                                            />
-                                        </ListItem>
+
 
 
                                     </List>
@@ -537,7 +451,7 @@ export default function ISO14001Page() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Regulatory compliance and adherence to environmental laws and regulations
+                                                        Enhanced Credibility and Trust
                                                     </Typography>
                                                 }
                                             />
@@ -551,7 +465,7 @@ export default function ISO14001Page() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Risk management
+                                                        Comprehensive Approach to Carbon Management
                                                     </Typography>
                                                 }
                                             />
@@ -565,12 +479,11 @@ export default function ISO14001Page() {
                                             <ListItemText
                                                 primary={
                                                     <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                                                        Operational excellence
+                                                        Regulatory Compliance and Risk Management
                                                     </Typography>
                                                 }
                                             />
                                         </ListItem>
-
 
 
                                     </List>

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import {
     Box,
@@ -16,10 +18,10 @@ import {
     IconButton,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
-import { useNavigate } from "react-router-dom"; // ✅ For navigation
+import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -59,7 +61,8 @@ function CustomGridIcon(props) {
 }
 
 export default function ISO27001Page() {
-    const navigate = useNavigate();
+    const router = useRouter();
+    const navigate = (path) => router.push(path);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -136,38 +139,22 @@ export default function ISO27001Page() {
 
                         <Box sx={{ display: "flex", gap: 2 }}>
                             <Button
-                                variant="contained"
-                                sx={{
-                                    textTransform: "none",
-                                    borderRadius: "10px",
-                                    px: 3,
-                                    py: 1.2,
-                                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
-                                    "&:hover": {
-                                        background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
-                                    },
-                                }}
-                            >
-                                Book Training Course
-                            </Button>
-
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    textTransform: "none",
-                                    borderRadius: "10px",
-                                    px: 3,
-                                    py: 1.2,
-                                    color: "#6C63FF",
-                                    borderColor: "#6C63FF",
-                                    "&:hover": {
-                                        backgroundColor: "#f5f3ff",
-                                        borderColor: "#6C63FF",
-                                    },
-                                }}
-                            >
-                                Get a quote
-                            </Button>
+                variant="contained"
+                component={NextLink}
+                href="/contact"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "10px",
+                  px: 3,
+                  py: 1.2,
+                  background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                  "&:hover": {
+                    background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                  },
+                }}
+              >
+                Get a quote
+              </Button>
                         </Box>
                     </Grid>
 
@@ -182,6 +169,7 @@ export default function ISO27001Page() {
                                 maxWidth: 1200,
                                 height: "auto",
                                 display: "block",
+                                pointerEvents: "none",
                                 mx: "auto",
                                 transition: "transform 0.5s ease", // smooth animation
                                 "&:hover": {
@@ -334,101 +322,33 @@ export default function ISO27001Page() {
                                         mb: 4,
                                     }}
                                 >
-                                    <AccessTimeIcon sx={{ fontSize: 18, mr: 1 }} />
-                                    Guides & Checklists
-                                </Box>
+                                    <CustomChatIcon sx={{ fontSize: 18, mr: 1 }} />
+                  Get in touch
+                </Box>
 
-                                {/* Title */}
-                                <Typography variant="h6" fontWeight="semibold" sx={{ mb: 4 }}>
-                                    Information Security
-                                    <br />
-                                    Management Guides and  <br />Checklists
-                                </Typography>
-
-                                {/* List of items */}
-                                <List sx={{ p: 0 }} >
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-
-                                        <ListItemText color="text.secondary" primary={
-                                            <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                ISO27001: 2022 FAQs
-                                            </Typography>
-                                        }
-                                        />
-
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    IMS Annex SL Comparison <br /> Tool
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    ISO27001: 2022 Gap Analysis
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomChatIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    Information Security<br />Management Training
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters >
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomDoubleArrowIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    ISO27001: 2022 <br /> Implementation Guide
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                    <ListItem disableGutters>
-                                        <ListItemIcon sx={{ minWidth: 32 }}>
-                                            <CustomChatIcon fontSize="small" />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={
-                                                <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                                                    Safety Nett Information <br />
-                                                    Security Management<br />
-                                                    Consultancy Services
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-
-                                </List>
+                <Typography variant="h6" fontWeight="semibold" sx={{ mb: 2 }}>
+                  Talk to SafetyNett
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.7 }}>
+                  Tell us what you need for this standard. We will reply by email.
+                </Typography>
+                <Button
+                  variant="contained"
+                  component={NextLink}
+                href="/contact"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    px: 3,
+                    py: 1.2,
+                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                    },
+                  }}
+                >
+                  Contact us
+                </Button>
                             </Paper>
                         </Grid>
                     </Grid>

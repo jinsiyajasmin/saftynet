@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import NextLink from "next/link";
 import {
   Box,
   Container,
@@ -8,7 +11,21 @@ import {
   Stack,
   Divider,
 } from "@mui/material";
-import { Instagram, LinkedIn } from "@mui/icons-material";
+import { contactEmails, postalAddress, products } from "./seo";
+
+const linkSx = {
+  transition: "color 0.3s ease",
+  "&:hover": { color: "#FDA410" },
+};
+
+const standards = [
+  { label: "ISO 9001 Quality", href: "/iso9001" },
+  { label: "ISO 14001 Environmental", href: "/iso14001" },
+  { label: "ISO 45001 Health & Safety", href: "/iso45001" },
+  { label: "ISO 50001 Energy", href: "/iso50001" },
+  { label: "ISO 27001 Information Security", href: "/iso27001" },
+  { label: "ISO 14068 Climate Change", href: "/iso14068" },
+];
 
 export default function Footer() {
   return (
@@ -16,20 +33,14 @@ export default function Footer() {
       component="footer"
       sx={{
         bgcolor: "background.paper",
-        pt: 15, // increased top padding
-        pb: 8,  // increased bottom padding
+        pt: 15,
+        pb: 8,
         borderTop: "1px solid #e5e7eb",
       }}
     >
       <Container maxWidth="lg">
-        <Grid
-          container
-          spacing={4}
-          columnSpacing={12} // increased spacing between columns
-          alignItems="flex-start"
-        >
-          {/* Logo + Copyright */}
-          <Grid item xs={12} sm={3} md={3}>
+        <Grid container spacing={4} columnSpacing={8} alignItems="flex-start">
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Box sx={{ mb: 2 }}>
               <Box
                 component="img"
@@ -38,135 +49,70 @@ export default function Footer() {
                 sx={{ width: 160, mb: 1 }}
               />
             </Box>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              © 2025 SafetyNett
+            <Typography variant="body2" color="text.secondary">
+              © 2026 SafetyNett
             </Typography>
           </Grid>
 
-          {/* Menu */}
-          <Grid item xs={6} sm={3} md={3}>
-            <Typography
-              variant="subtitle2"
-              fontWeight="bold"
-              gutterBottom
-              color="text.secondary"
-            >
-              MENU
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Typography variant="subtitle2" fontWeight="bold" gutterBottom color="text.secondary">
+              PRODUCTS
             </Typography>
             <Stack spacing={1}>
-              <Link href="#" underline="none" color="text.secondary" sx={{
-                transition: "color 0.3s ease", // smooth color transition
-                "&:hover": {
-                  color: "#FDA410",// blue from theme (or use "#3b82f6")
-                },
-              }}>
-                Services
-              </Link>
-              <Link href="#" underline="none" color="text.secondary" sx={{
-                transition: "color 0.3s ease", // smooth color transition
-                "&:hover": {
-                  color: "#FDA410",// blue from theme (or use "#3b82f6")
-                },
-              }}>
-                Solutions
-              </Link>
-              <Link href="#" underline="none" color="text.secondary" sx={{
-                transition: "color 0.3s ease", // smooth color transition
-                "&:hover": {
-                  color: "#FDA410",// blue from theme (or use "#3b82f6")
-                },
-              }}>
-                Company
-              </Link>
+              {products.map((product) => (
+                <Link
+                  key={product.href}
+                  href={product.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="none"
+                  color="text.secondary"
+                  sx={linkSx}
+                >
+                  {product.name}
+                </Link>
+              ))}
             </Stack>
           </Grid>
 
-          {/* Legal */}
-          <Grid item xs={6} sm={3} md={3}>
-            <Typography
-              variant="subtitle2"
-              fontWeight="bold"
-              gutterBottom
-              color="text.secondary"
-            >
-              LEGAL
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Typography variant="subtitle2" fontWeight="bold" gutterBottom color="text.secondary">
+              ISO STANDARDS
             </Typography>
             <Stack spacing={1}>
-              <Link href="#" underline="none" color="text.secondary" sx={{
-                transition: "color 0.3s ease", // smooth color transition
-                "&:hover": {
-                  color: "#FDA410",// blue from theme (or use "#3b82f6")
-                },
-              }}>
-                Terms & Conditions
-              </Link>
-              <Link href="#" underline="none" color="text.secondary" sx={{
-                transition: "color 0.3s ease", // smooth color transition
-                "&:hover": {
-                  color: "#FDA410",// blue from theme (or use "#3b82f6")
-                },
-              }}>
-                License
-              </Link>
-              <Link href="#" underline="none" color="text.secondary" sx={{
-                transition: "color 0.3s ease", // smooth color transition
-                "&:hover": {
-                  color: "#FDA410",// blue from theme (or use "#3b82f6")
-                },
-              }}>
-                Contact
-              </Link>
+              {standards.map((item) => (
+                <Link
+                  key={item.href}
+                  component={NextLink}
+                  href={item.href}
+                  underline="none"
+                  color="text.secondary"
+                  sx={linkSx}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </Stack>
           </Grid>
 
-          {/* Social */}
-          <Grid item xs={6} sm={3} md={3}>
-            <Typography
-              variant="subtitle2"
-              fontWeight="bold"
-              gutterBottom
-              color="text.secondary"
-            >
-              SOCIAL
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <Typography variant="subtitle2" fontWeight="bold" gutterBottom color="text.secondary">
+              CONTACT
             </Typography>
             <Stack spacing={1}>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Instagram fontSize="small" sx={{ color: "#FDA410" }} />
-                <Link
-                  href="https://instagram.com"
-                  underline="none"
-                  color="text.secondary"
-                  sx={{
-                    transition: "color 0.3s ease", // smooth color transition
-                    "&:hover": {
-                      color: "#FDA410",// blue from theme (or use "#3b82f6")
-                    },
-                  }}
-                >
-                  Instagram
-                </Link>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <LinkedIn fontSize="small" sx={{ color: "#FDA410" }} />
-                <Link
-                  href="https://linkedin.com"
-                  underline="none"
-                  color="text.secondary"
-                  sx={{
-                    transition: "color 0.3s ease", // smooth color transition
-                    "&:hover": {
-                      color: "#FDA410",// blue from theme (or use "#3b82f6")
-                    },
-                  }}
-                >
-                  LinkedIn
-                </Link>
-              </Stack>
+              <Link component={NextLink} href="/contact" underline="none" color="text.secondary" sx={linkSx}>
+                Contact page
+              </Link>
+              <Link href={`mailto:${contactEmails.direct}`} underline="none" color="text.secondary" sx={linkSx}>
+                {contactEmails.direct}
+              </Link>
+              <Link href={`mailto:${contactEmails.enquiries}`} underline="none" color="text.secondary" sx={linkSx}>
+                {contactEmails.enquiries}
+              </Link>
             </Stack>
           </Grid>
         </Grid>
 
-        {/* Divider + Bottom Text */}
         <Divider sx={{ mt: 6, mb: 2 }} />
         <Box
           sx={{
@@ -177,19 +123,13 @@ export default function Footer() {
             gap: 4,
           }}
         >
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ fontSize: "0.875rem", pt: 0.5, whiteSpace: "nowrap" }}
-          >
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.875rem", pt: 0.5 }}>
             All Rights Reserved.
           </Typography>
           <Box sx={{ maxWidth: { xs: "100%", sm: 680 }, textAlign: { xs: "left", sm: "right" } }}>
-            <Stack spacing={1}>
-              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.825rem", lineHeight: 1.5 }}>
-                Unit 17f, The Lansbury Estates, 102 Lower Guildford Road,<br/> Knaphill, Woking, England, GU21 2EP.
-              </Typography>
-            </Stack>
+            <Typography variant="body2" color="text.secondary" sx={{ fontSize: "0.825rem", lineHeight: 1.5 }}>
+              {postalAddress.streetAddress},<br /> {postalAddress.addressLocality}, {postalAddress.addressRegion}, {postalAddress.postalCode}.
+            </Typography>
           </Box>
         </Box>
       </Container>

@@ -69,7 +69,6 @@ typings/
 
 # gatsby files
 .cache/
-public
 
 # vuepress build output
 .vuepress/dist
@@ -82,3 +81,4 @@ public
 
 # Dynamically generated artifacts
 dist
+node_modules

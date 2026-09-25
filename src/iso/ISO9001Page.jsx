@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import {
   Box,
@@ -16,10 +18,10 @@ import {
   IconButton,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
-import { useNavigate } from "react-router-dom"; // ✅ For navigation
+import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -58,8 +60,9 @@ function CustomGridIcon(props) {
   );
 }
 
-export default function ISO50001Page() {
-  const navigate = useNavigate();
+export default function ISO9001Page() {
+  const router = useRouter();
+  const navigate = (path) => router.push(path);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -92,7 +95,7 @@ export default function ISO50001Page() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              ISO50001: 2018 Energy Management
+              ISO9001: 2015 QUALITY MANAGEMENT
             </Typography>
 
             <Typography variant="h4" fontWeight="semibold" sx={{
@@ -101,7 +104,7 @@ export default function ISO50001Page() {
                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
               },
             }}>
-              International Standard for Energy
+              International Standard for Quality
               <br />
               Management Systems
             </Typography>
@@ -117,9 +120,10 @@ export default function ISO50001Page() {
                 },
               }}
             >
-              Implementing energy management is a strategic decision that helps an organisation improve
-              <br /> its overall framework for optimising energy efficiency and reducing carbon footprint. It
-              <br />provides a foundation for sustainable business development.
+              The implementation of a QMS is a strategic decision that helps an
+              organisation
+              <br /> improve its overall performance and provide a foundation
+              basis for sustainable  <br />business development.
             </Typography>
 
             <Typography variant="body1" fontWeight="bold" sx={{
@@ -128,13 +132,16 @@ export default function ISO50001Page() {
                 color: "#0D47A1",// blue from theme (or use "#3b82f6")
               },
             }}>
-              If you are looking for a consultant to support you with a new or existing Energy
+              If you are looking for a consultant to support you with a new or
+              existing Quality
               <br /> Management System, Safety Nett can help.
             </Typography>
 
             <Box sx={{ display: "flex", gap: 2 }}>
               <Button
                 variant="contained"
+                component={NextLink}
+                href="/contact"
                 sx={{
                   textTransform: "none",
                   borderRadius: "10px",
@@ -143,24 +150,6 @@ export default function ISO50001Page() {
                   background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
                   "&:hover": {
                     background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
-                  },
-                }}
-              >
-                Book Training Course
-              </Button>
-
-              <Button
-                variant="outlined"
-                sx={{
-                  textTransform: "none",
-                  borderRadius: "10px",
-                  px: 3,
-                  py: 1.2,
-                  color: "#6C63FF",
-                  borderColor: "#6C63FF",
-                  "&:hover": {
-                    backgroundColor: "#f5f3ff",
-                    borderColor: "#6C63FF",
                   },
                 }}
               >
@@ -173,13 +162,14 @@ export default function ISO50001Page() {
           <Grid item xs={12} md={6}>
             <Box
               component="img"
-              src="/ISO5001.svg"
+              src="/ISO9001.svg"
               alt="ISO9001"
               sx={{
-                width: "200%",
+                width: "250%",
                 maxWidth: 1200,
                 height: "auto",
                 display: "block",
+                pointerEvents: "none",
                 mx: "auto",
                 transition: "transform 0.5s ease", // smooth animation
                 "&:hover": {
@@ -220,7 +210,7 @@ export default function ISO50001Page() {
                         color: "#0D47A1",// blue from theme (or use "#3b82f6")
                       },
                     }}>
-                      What is ISO50001?
+                      What is ISO9001?
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -230,20 +220,12 @@ export default function ISO50001Page() {
                       color="text.secondary"
                       sx={{ lineHeight: 1.7 }}
                     >
-                      ISO 50001:2018 is the international standard for
-                      Energy Management Systems (EnMS). It provides a
-                      comprehensive framework for improving energy performance
-                      and efficiency, fostering a systematic approach to energy
-                      management. The standard helps public and private sector
-                      organisations establish, implement, maintain, and improve
-                      an energy management system that aligns with broader environmental
-                      goals and regulatory requirements. Certification to ISO 50001
-                      demonstrates an organisation’s commitment to continuous improvement
-                      in energy management practices. This makes it easier to comply
-                      with relevant legal and regulatory requirements, such as the UK
-                      Energy Saving Opportunities Scheme (ESOS). Certified organisations
-                      can also lead by example within their industries, showcasing their
-                      dedication to sustainable energy use.
+                      • ISO 9001 is an international standard for quality management
+                      systems (QMS) that outlines the requirements organisations must adhere
+                      to enhance customer satisfaction and ensure consistent quality in
+                      products and services. <br /> • It helps organisations of all sizes
+                      and sectors improve their performance, meet customer expectations, and
+                      demonstrate their commitment to quality.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -272,7 +254,7 @@ export default function ISO50001Page() {
                         color: "#0D47A1",// blue from theme (or use "#3b82f6")
                       },
                     }}>
-                      Why is ISO50001 important?
+                      Why is ISO9001 important?
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -282,15 +264,20 @@ export default function ISO50001Page() {
                       color="text.secondary"
                       sx={{ lineHeight: 1.7 }}
                     >
-                      • ISO 50001 is recognized worldwide, which helps organizations
-                      in various sectors align with international best practices
-                      for energy management. • Compliance with ISO 50001 can facilitate
-                      adherence to local and international energy-related laws and regulations,
-                      minimizing the risk of non-compliance. • It underscores a commitment
-                      to sustainability and environmental responsibility, which can enhance
-                      corporate reputation and stakeholder trust. • The standard establishes
-                      a basis for the continual enhancement of energy performance, fostering
-                      a culture of ongoing improvement within the organisation.
+                      Customer Confidence: By adhering to ISO 9001, organisations establish and maintain
+                      strong quality control processes. This commitment to quality enhances customer trust
+                      and satisfaction, fostering stronger relationships and repeat business.
+                      Effective Complaint Resolution:  ISO 9001 offers structured guidance for efficiently addressing and
+                      resolving customer complaints. This systematic approach not only promotes timely solutions but also
+                      improves overall customer satisfaction by demonstrating that the organisation values feedback.
+                      Process Improvement: The standard assists organisations in identifying and eliminating inefficiencies
+                      in their operations. By reducing waste and streamlining processes, ISO 9001 promotes informed
+                      decision-making, ultimately leading to substantial cost savings and enhanced business outcomes.
+                      Ongoing Optimization: With regular audits and reviews mandated by ISO 9001, organisations are
+                      encouraged to continually refine and enhance their quality management systems. This commitment
+                      to ongoing improvement helps companies remain competitive in the marketplace and achieve long-term
+                      success by adapting to changing customer needs and industry trends.
+
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -329,101 +316,33 @@ export default function ISO50001Page() {
                     mb: 4,
                   }}
                 >
-                  <AccessTimeIcon sx={{ fontSize: 18, mr: 1 }} />
-                  Guides & Checklists
+                  <CustomChatIcon sx={{ fontSize: 18, mr: 1 }} />
+                  Get in touch
                 </Box>
 
-                {/* Title */}
-                <Typography variant="h6" fontWeight="semibold" sx={{ mb: 4 }}>
-                  Energy Management
-                  <br />
-                  Guides & Checklists
+                <Typography variant="h6" fontWeight="semibold" sx={{ mb: 2 }}>
+                  Talk to SafetyNett
                 </Typography>
-
-                {/* List of items */}
-                <List sx={{ p: 0 }} >
-                  <ListItem disableGutters >
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CustomDoubleArrowIcon fontSize="small" />
-                    </ListItemIcon>
-
-                    <ListItemText color="text.secondary" primary={
-                      <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                        ISO50001: 2018 FAQs
-                      </Typography>
-                    }
-                    />
-
-                  </ListItem>
-
-                  <ListItem disableGutters >
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CustomDoubleArrowIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                          IMS Annex SL Comparison <br /> Tool
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem disableGutters >
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CustomDoubleArrowIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                          ISO50001: 2018 Gap Analysis
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem disableGutters >
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CustomChatIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                          Energy Management Training
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem disableGutters >
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CustomDoubleArrowIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                          ISO50001: 2018 Implementation<br /> Guide
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem disableGutters>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CustomChatIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={
-                        <Typography variant="body3" color="text.secondary" sx={{ mb: 1 }}>
-                          Safety Nett Energy <br />
-                          Management Consultancy <br />
-                          Services
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                </List>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.7 }}>
+                  Tell us what you need for this standard. We will reply by email.
+                </Typography>
+                <Button
+                  variant="contained"
+                  component={NextLink}
+                href="/contact"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    px: 3,
+                    py: 1.2,
+                    background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                    },
+                  }}
+                >
+                  Contact us
+                </Button>
               </Paper>
             </Grid>
           </Grid>
@@ -473,7 +392,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Cost Reductions
+                            Enhanced Customer Trust and Satisfaction
                           </Typography>
                         }
                       />
@@ -487,7 +406,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Risk Management
+                            Cost Savings and Productivity Gains
                           </Typography>
                         }
                       />
@@ -501,7 +420,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Employee Engagement
+                            Enhanced Employee Engagement
                           </Typography>
                         }
                       />
@@ -515,7 +434,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Integration with Other Standards
+                            Streamlined Regulatory Compliance
                           </Typography>
                         }
                       />
@@ -529,13 +448,25 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Contribution to Corporate Goals
+                            Facilitated International Trade
                           </Typography>
                         }
                       />
                     </ListItem>
 
+                    <ListItem disableGutters>
+                      <ListItemIcon sx={{ minWidth: 28 }}>
+                        <CustomGridIcon fontSize="small" />
 
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
+                            Sustainable Growth
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
                   </List>
                 </Grid>
 
@@ -550,7 +481,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Enhanced Energy Efficiency
+                            Sound Quality Control Processes
                           </Typography>
                         }
                       />
@@ -564,7 +495,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Improved Performance Metrics
+                            Enhanced Organisational Resilience
                           </Typography>
                         }
                       />
@@ -578,7 +509,7 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Competitive Advantage
+                            Improved Risk Management
                           </Typography>
                         }
                       />
@@ -592,13 +523,25 @@ export default function ISO50001Page() {
                       <ListItemText
                         primary={
                           <Typography variant="body1" color="text.secondary" sx={{ m: 0, p: 0 }}>
-                            Access to Funding and Incentives
+                            Enhanced Market Position
                           </Typography>
                         }
                       />
                     </ListItem>
 
+                    <ListItem disableGutters>
+                      <ListItemIcon sx={{ minWidth: 28 }}>
+                        <CustomGridIcon fontSize="small" />
 
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          <Typography variant="body" color="text.secondary" sx={{ m: 0, p: 0 }}>
+                            A Framework for Collaboration
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
                   </List>
                 </Grid>
               </Grid>
