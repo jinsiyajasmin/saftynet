@@ -1,8 +1,22 @@
-const TO = "athulya@safetynett.co.uk";
-const COPY = "m.chiweda@safetynett.co.uk,no-reply@safetynett.co.uk";
+import nodemailer from "nodemailer";
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function recipients() {
+  return String(process.env.CONTACT_TO || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter((item) => isValidEmail(item));
 }
 
 export async function POST(request) {
@@ -25,42 +39,54 @@ export async function POST(request) {
     return Response.json({ error: "That message is too long. Please shorten it and try again." }, { status: 400 });
   }
 
-  const origin = request.headers.get("origin") || "https://safetynett.co.uk";
-  const response = await fetch(`https://formsubmit.co/ajax/${TO}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Origin: origin,
-      Referer: request.headers.get("referer") || `${origin}/contact`,
-    },
-    body: JSON.stringify({
-      name,
-      email,
-      message,
-      _subject: `New enquiry from ${name}`,
-      _replyto: email,
-      _cc: COPY,
-      _template: "box",
-      _captcha: "false",
-    }),
+  const to = recipients();
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const from = process.env.SMTP_FROM || user;
+
+  if (!host || !user || !pass || to.length === 0) {
+    return Response.json(
+      { error: "We could not send your message. Please email m.chiweda@safetynett.co.uk directly." },
+      { status: 503 }
+    );
+  }
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: false,
+    requireTLS: true,
+    auth: { user, pass },
   });
 
-  const result = await response.json().catch(() => ({}));
-  const succeeded = response.ok && String(result.success) !== "false";
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
 
-  if (!succeeded) {
-    const notice = String(result.message || "");
-    if (/activat/i.test(notice)) {
-      return Response.json(
-        {
-          error:
-            "One confirmation is needed first. Open the activation email in the SafetyNett inbox, click Activate Form, then send this message again.",
-        },
-        { status: 409 }
-      );
-    }
-
+  try {
+    await transporter.sendMail({
+      from: `"SafetyNett" <${from}>`,
+      to,
+      replyTo: email,
+      subject: `New enquiry from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827">
+          <div style="background:#4f46e5;color:#fff;padding:20px 24px;border-radius:12px 12px 0 0">
+            <p style="margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase">SafetyNett</p>
+            <h1 style="margin:8px 0 0;font-size:22px">New website enquiry</h1>
+          </div>
+          <div style="border:1px solid #e5e7eb;border-top:0;padding:24px;border-radius:0 0 12px 12px">
+            <p style="margin:0 0 8px"><strong>Name</strong><br>${safeName}</p>
+            <p style="margin:0 0 8px"><strong>Email</strong><br><a href="mailto:${safeEmail}">${safeEmail}</a></p>
+            <p style="margin:16px 0 8px"><strong>Message</strong></p>
+            <p style="margin:0;line-height:1.6">${safeMessage}</p>
+          </div>
+        </div>
+      `,
+    });
+  } catch {
     return Response.json(
       { error: "We could not send your message. Please email m.chiweda@safetynett.co.uk directly." },
       { status: 502 }
