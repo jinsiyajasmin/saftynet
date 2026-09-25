@@ -1,5 +1,5 @@
 const TO = "m.chiweda@safetynett.co.uk";
-const COPY = "no-reply@safetynett.co.uk";
+const COPY = "no-reply@safetynett.co.uk,athulya@safetynett.co.uk";
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
