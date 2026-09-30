@@ -7,7 +7,6 @@ const companies = [
   { name: "Deltron", logo: "/Deltron.png" },
   { name: "Construct Lifts", logo: "/Construct_Lifts.png" },
   { name: "Adstone", logo: "/Adstone.png" },
-  { name: "Onision", logo: "/onision.png" },
   { name: "ICRIT", logo: "/ICRIT.png" },
   { name: "Stannah", logo: "/Stannah.png" },
   { name: "Peerless", logo: "/Peerless.png" },
