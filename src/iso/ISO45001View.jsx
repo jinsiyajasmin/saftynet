@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import DocumentPackageSection from "../DocumentPackageSection";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -177,6 +178,22 @@ export default function ISO45001View() {
             />
           </Grid>
         </Grid>
+
+        {/* Document Package Section */}
+        <DocumentPackageSection
+          standardCode="ISO 45001:2018"
+          standardName="Occupational Health & Safety"
+          code="D152"
+          price="£399"
+          deliverables={[
+            "ISO 45001:2018 OH&S Manual (editable MS Word)",
+            "Mandatory Health & Safety Procedures & Process Flow Charts",
+            "Hazard Identification & Risk Assessment (HIRA) Templates",
+            "OH&S Internal Audit Checklist with detailed audit questions",
+            "Incident Reporting, Emergency Preparedness & Investigation Forms",
+            "100% customizable in MS Word & Excel with instant delivery",
+          ]}
+        />
 
         {/* FAQ + Guides Section */}
         <Container maxWidth="lg" disableGutters sx={{ py: 10 }}>

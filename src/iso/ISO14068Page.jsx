@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import DocumentPackageSection from "../DocumentPackageSection";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -179,6 +180,22 @@ export default function ISO14068Page() {
                     </Grid>
 
                 </Grid>
+
+                {/* Document Package Section */}
+                <DocumentPackageSection
+                    standardCode="ISO 14068:2023"
+                    standardName="Climate Change Management & Net Zero"
+                    code="D168"
+                    price="£499"
+                    deliverables={[
+                        "ISO 14068:2023 Carbon Neutrality & Net Zero Transition Manual",
+                        "GHG Baseline Quantification & Carbon Footprint Assessment Templates",
+                        "Carbon Neutrality Management Plan & Target Setting Procedures",
+                        "Internal Audit Checklist for ISO 14068:2023 Compliance",
+                        "Carbon Offsetting, Residual Emissions & Monitoring Forms",
+                        "100% customizable in MS Word & Excel with instant delivery",
+                    ]}
+                />
 
                 {/* FAQ + Guides Section */}
                 <Container maxWidth="lg" disableGutters sx={{ py: 10 }}>

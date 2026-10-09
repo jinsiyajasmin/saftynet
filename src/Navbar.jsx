@@ -27,8 +27,8 @@ import { useRouter, usePathname } from "next/navigation";
 import { products } from "./seo";
 
 const services = [
-  { label: "ISO9001: 2015 Quality Management", route: "/iso9001" },
-  { label: "ISO14001: 2015 Environmental Management", route: "/iso14001" },
+  { label: "ISO9001: 2026 Quality Management", route: "/iso9001" },
+  { label: "ISO14001: 2026 Environmental Management", route: "/iso14001" },
   { label: "ISO45001: 2018 Occupational Health & Safety", route: "/iso45001" },
   { label: "ISO50001: 2018 Energy Management", route: "/iso50001" },
   { label: "ISO27001: 2022 Information Security Management", route: "/iso27001" },

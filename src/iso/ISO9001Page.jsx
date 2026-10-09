@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import DocumentPackageSection from "../DocumentPackageSection";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -95,7 +96,7 @@ export default function ISO9001Page() {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              ISO9001: 2015 QUALITY MANAGEMENT
+              ISO9001: 2026 QUALITY MANAGEMENT
             </Typography>
 
             <Typography variant="h4" fontWeight="semibold" sx={{
@@ -180,6 +181,22 @@ export default function ISO9001Page() {
           </Grid>
 
         </Grid>
+
+        {/* Document Package Section */}
+        <DocumentPackageSection
+          standardCode="ISO 9001:2026"
+          standardName="Quality Management"
+          code="D101"
+          price="£499"
+          deliverables={[
+            "ISO 9001:2026 Quality Manual (editable MS Word)",
+            "Mandatory Quality Procedures & Process Flow Charts",
+            "Sample Quality Policy, Objectives & Risk Registers",
+            "Internal Audit Checklist (over 700 audit questions)",
+            "Ready-to-use Formats & Templates for all departments",
+            "100% customizable in MS Word & Excel with instant delivery",
+          ]}
+        />
 
         {/* FAQ + Guides Section */}
         <Container maxWidth="lg" disableGutters sx={{ py: 10 }}>

@@ -24,6 +24,19 @@ export default function ContactPage() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const pkg = params.get("package");
+      if (pkg) {
+        setForm((prev) => ({
+          ...prev,
+          message: prev.message || `Hello SafetyNett, I would like to enquire about the ${pkg}.`,
+        }));
+      }
+    }
+  }, []);
+
   const update = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };

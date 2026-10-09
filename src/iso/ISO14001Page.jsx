@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import DocumentPackageSection from "../DocumentPackageSection";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -95,7 +96,7 @@ export default function ISO14001Page() {
                                 fontFamily: "Inter, sans-serif",
                             }}
                         >
-                            ISO14001: 2015 Environmental Management
+                            ISO14001: 2026 Environmental Management
 
                         </Typography>
 
@@ -179,6 +180,22 @@ export default function ISO14001Page() {
                         />
                     </Grid>
                 </Grid>
+
+                {/* Document Package Section */}
+                <DocumentPackageSection
+                    standardCode="ISO 14001:2026"
+                    standardName="Environmental Management"
+                    code="D103"
+                    price="£499"
+                    deliverables={[
+                        "ISO 14001:2026 EMS Manual (editable MS Word)",
+                        "Mandatory Environmental Procedures & Process Flow Charts",
+                        "Environmental Aspect-Impact Identification Registers",
+                        "EMS Internal Audit Checklist (over 400 questions)",
+                        "Operational Control Procedures & Emergency Preparedness Templates",
+                        "100% customizable in MS Word & Excel with instant delivery",
+                    ]}
+                />
 
                 {/* FAQ + Guides Section */}
                 <Container maxWidth="lg" disableGutters sx={{ py: 10 }}>

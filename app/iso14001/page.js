@@ -3,9 +3,9 @@ import ISO14001Page from "../../src/iso/ISO14001Page";
 import JsonLd from "../../src/JsonLd";
 import { pageMetadata, webPageJsonLd } from "../../src/seo";
 
-const title = "ISO 14001:2015 Environmental Management";
+const title = "ISO 14001:2026 Environmental Management";
 const description =
-  "International standard for environmental management systems. SafetyNett supports ISO 14001:2015 environmental policy, sustainability, and compliance.";
+  "International standard for environmental management systems. SafetyNett supports ISO 14001:2026 environmental policy, sustainability, and compliance.";
 const path = "/iso14001";
 
 export const metadata = pageMetadata({ title, description, path });

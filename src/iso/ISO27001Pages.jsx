@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import DocumentPackageSection from "../DocumentPackageSection";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -180,6 +181,22 @@ export default function ISO27001Page() {
                     </Grid>
 
                 </Grid>
+
+                {/* Document Package Section */}
+                <DocumentPackageSection
+                    standardCode="ISO/IEC 27001:2022"
+                    standardName="Information Security Management"
+                    code="D106"
+                    price="£499"
+                    deliverables={[
+                        "ISO 27001:2022 ISMS Manual (10 chapters & Annexures in Word)",
+                        "20+ Mandatory ISMS Procedures & Process Flowcharts",
+                        "Risk Assessment Methodology & 45+ Sample Risk Templates",
+                        "Statement of Applicability (SoA) mapped to 93 Annex A controls",
+                        "Internal Audit Checklist for ISO 27001:2022 Certification Audit",
+                        "100% customizable in MS Word & Excel with instant delivery",
+                    ]}
+                />
 
                 {/* FAQ + Guides Section */}
                 <Container maxWidth="lg" disableGutters sx={{ py: 10 }}>

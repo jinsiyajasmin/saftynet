@@ -12,29 +12,43 @@ import {
   List,
   ListItem,
   ListItemText,
+  Chip,
 } from "@mui/material";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 const isoData = [
   {
-    title: "ISO9001: 2015 Quality Management",
+    title: "ISO9001: 2026 Quality Management",
     subtitle: "International Standard for Quality Management Systems",
     image: "/ISO9001.svg",
-    route: "/iso9001",   // <-- add route here
+    route: "/iso9001",
     points: [
       "Quality Assurance",
       "Process Improvement",
       "Customer Satisfaction",
       "Continuous Improvement",
     ],
+    docPackage: {
+      name: "ISO 9001:2026 Documentation Kit",
+      price: "£499",
+      summary: "Manual, Procedures, Audit Checklists & Templates",
+    },
   },
   {
-    title: "ISO14001: 2015 Environmental Management",
+    title: "ISO14001: 2026 Environmental Management",
     subtitle: "International Standard for Environmental Management System",
     image: "/ISO14001.svg",
     route: "/iso14001",
     points: ["Environmental Policy", "Sustainability", "Pollution Prevention", "Compliance"],
+    docPackage: {
+      name: "ISO 14001:2026 Documentation Kit",
+      price: "£499",
+      summary: "Manual, Procedures, EMS Audit Checklists & SOPs",
+    },
   },
   {
     title: "ISO45001: 2018 Occupational Health & Safety",
@@ -42,6 +56,11 @@ const isoData = [
     image: "/ISO45001.svg",
     route: "/iso45001",
     points: ["Hazard Control", "Risk Management", "Worker Safety", "Compliance"],
+    docPackage: {
+      name: "ISO 45001:2018 Documentation Kit",
+      price: "£399",
+      summary: "OH&S Manual, Procedures, Forms & Audit Checklists",
+    },
   },
   {
     title: "ISO50001: 2018 Energy Management",
@@ -49,6 +68,11 @@ const isoData = [
     image: "/ISO5001.svg",
     route: "/iso50001",
     points: ["Energy Efficiency", "Cost Reduction", "Sustainability", "Performance Monitoring"],
+    docPackage: {
+      name: "ISO 50001:2018 Documentation Kit",
+      price: "£449",
+      summary: "Energy Manual, Procedures, Forms & Audit Checklists",
+    },
   },
   {
     title: "ISO27001: 2022 Information Security Management",
@@ -56,6 +80,11 @@ const isoData = [
     image: "/ISO27001.svg",
     route: "/iso27001",
     points: ["Risk Assessment", "Data Protection", "Access Control", "Cybersecurity"],
+    docPackage: {
+      name: "ISO 27001:2022 Documentation Kit",
+      price: "£499",
+      summary: "ISMS Manual, 20+ Procedures, Risk Templates & Checklist",
+    },
   },
   {
     title: "ISO14068: 2023 Climate Change Management",
@@ -63,6 +92,11 @@ const isoData = [
     image: "/ISO14068.svg",
     route: "/iso14068",
     points: ["Carbon Neutrality", "Sustainability Goals", "Climate Action", "Compliance"],
+    docPackage: {
+      name: "ISO 14068:2023 Documentation Kit",
+      price: "£499",
+      summary: "Net Zero Manual, Transition Plans, Metrics & Templates",
+    },
   },
 ];
 
@@ -109,8 +143,8 @@ export default function IsoCards() {
             mb: { xs: 4, md: 6 },
           }}
         >
-          We provide ISO management system solutions to help businesses achieve
-          compliance, efficiency, and excellence in quality, environment, safety,
+          We provide full ISO consultancy and ready-to-use editable document packages to help
+          businesses achieve certification and operational excellence in quality, environment, safety,
           energy, security, and climate management.
         </Typography>
       </motion.div>
@@ -123,132 +157,206 @@ export default function IsoCards() {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.8, delay: index * 0.15 }}
             >
               <Card
                 sx={{
                   borderRadius: "20px",
-                  border: "1px solid #d1d5db",
-                  boxShadow: "0 6px 20px rgba(0,0,0,0.05)",
+                  border: "1px solid #e2e8f0",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
                   width: "100%",
                   maxWidth: 560,
                   mx: "auto",
-                  p: { xs: 2, md: 4 },
+                  p: { xs: 2.5, md: 3.5 },
                   textAlign: "left",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  transition: "all 0.4s ease",
-                  overflow: "hidden",
-                  maxHeight: 250,
+                  transition: "all 0.3s ease",
+                  backgroundColor: "#ffffff",
                   "&:hover": {
-                    maxHeight: 600,
-                    transform: "scale(1.03)",
+                    transform: "translateY(-4px)",
                     borderColor: "#6C63FF",
+                    boxShadow: "0 12px 28px rgba(108, 99, 255, 0.12)",
                   },
                   "&:hover .titleText": {
                     color: "#0D47A1",
                   },
-                  "&:hover .extraPoints": {
-                    display: "block",
-                  },
                 }}
               >
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  alignItems="flex-start"
-                  spacing={3}
-                >
-                  {/* Text Content */}
-                  <CardContent sx={{ flex: 1, p: 0 }}>
-                    <Typography
-                      className="titleText"
-                      gutterBottom
-                      sx={{
-                        fontFamily:
-                          'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
-                        fontWeight: 500,
-                        fontSize: { xs: "1.2rem", md: "1.5rem" },
-                        lineHeight: 1.3,
-                        transition: "color 0.3s ease",
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
+                <Box>
+                  <Stack
+                    direction="row"
+                    alignItems="flex-start"
+                    justifyContent="space-between"
+                    spacing={2}
+                  >
+                    <Box sx={{ flex: 1 }}>
+                      <Typography
+                        className="titleText"
+                        gutterBottom
+                        sx={{
+                          fontFamily:
+                            'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
+                          fontWeight: 600,
+                          fontSize: { xs: "1.15rem", md: "1.3rem" },
+                          lineHeight: 1.3,
+                          transition: "color 0.3s ease",
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
 
-                    <Typography
-                      mb={2}
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: { xs: "0.8rem", md: "0.9rem" },
-                        lineHeight: 1.57,
-                        color: "text.secondary",
-                      }}
-                    >
-                      {item.subtitle}
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 400,
+                          fontSize: "0.85rem",
+                          lineHeight: 1.5,
+                          color: "text.secondary",
+                          mb: 2,
+                        }}
+                      >
+                        {item.subtitle}
+                      </Typography>
+                    </Box>
 
-                    {/* Hidden points */}
-                    <List
-                      className="extraPoints"
+                    {/* Image */}
+                    <Box
+                      component="img"
+                      src={item.image}
+                      alt={item.title}
                       sx={{
-                        pl: 2,
-                        mb: 2,
-                        display: "none",
-                        listStyleType: "disc",
-                        "& .MuiListItem-root": {
-                          display: "list-item",
-                          listStyleType: "disc",
-                          pl: 1,
-                        },
+                        width: { xs: 65, sm: 75 },
+                        height: { xs: 65, sm: 75 },
+                        objectFit: "contain",
+                        flexShrink: 0,
                       }}
-                    >
-                      {item.points.map((point, i) => (
-                        <ListItem key={i} sx={{ py: 0.3 }}>
-                          <ListItemText
-                            primary={point}
-                            primaryTypographyProps={{
-                              variant: "body2",
-                              sx: { fontFamily: "Inter, sans-serif" },
-                            }}
-                          />
-                        </ListItem>
-                      ))}
-                    </List>
+                    />
+                  </Stack>
 
-                    <Button
-                      variant="outlined"
-                      onClick={() => navigate(item.route)} // <-- navigate to route
-                      sx={{
-                        textTransform: "none",
-                        borderRadius: "10px",
-                        px: 3,
-                        py: 1,
-                        color: "#6C63FF",
-                        borderColor: "#6C63FF",
-                        "&:hover": {
-                          backgroundColor: "#6C63FF",
-                          color: "#fff",
-                        },
-                      }}
-                    >
-                      Learn More
-                    </Button>
-                  </CardContent>
+                  {/* Key Highlights */}
+                  <List sx={{ pl: 0, py: 0, mb: 2.5 }}>
+                    {item.points.slice(0, 3).map((point, i) => (
+                      <ListItem key={i} disableGutters sx={{ py: 0.2 }}>
+                        <CheckCircleOutlineIcon
+                          sx={{ fontSize: 16, color: "#10b981", mr: 1, flexShrink: 0 }}
+                        />
+                        <ListItemText
+                          primary={point}
+                          primaryTypographyProps={{
+                            variant: "body2",
+                            sx: { fontSize: "0.82rem", color: "#475569" },
+                          }}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
 
-                  {/* Image */}
+                  {/* Document Package Cardlet */}
                   <Box
-                    component="img"
-                    src={item.image}
-                    alt={item.title}
                     sx={{
-                      width: { xs: 80, sm: 100, md: 120 },
-                      height: { xs: 80, sm: 100, md: 120 },
-                      objectFit: "contain",
-                      mt: { xs: 2, sm: 1 },
-                      mx: { xs: "auto", sm: 0 },
+                      p: 2,
+                      borderRadius: "14px",
+                      backgroundColor: "#f8fafc",
+                      border: "1px solid #e2e8f0",
+                      mb: 2.5,
+                      transition: "background-color 0.2s ease",
+                      "&:hover": {
+                        backgroundColor: "#f1f5f9",
+                      },
                     }}
-                  />
+                  >
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      sx={{ mb: 0.8 }}
+                    >
+                      <Stack direction="row" spacing={0.8} alignItems="center">
+                        <DescriptionOutlinedIcon sx={{ fontSize: 18, color: "#6C63FF" }} />
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            fontWeight: 700,
+                            color: "#6C63FF",
+                            letterSpacing: 0.5,
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          Document Package
+                        </Typography>
+                      </Stack>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 700,
+                          color: "#0f172a",
+                          fontSize: "1.1rem",
+                        }}
+                      >
+                        {item.docPackage.price}
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontSize: "0.8rem",
+                        color: "#64748b",
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {item.docPackage.summary}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* Buttons */}
+                <Stack direction="row" spacing={1.5} sx={{ mt: 1 }}>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    onClick={() => navigate(item.route)}
+                    sx={{
+                      textTransform: "none",
+                      borderRadius: "10px",
+                      py: 1,
+                      fontSize: "0.85rem",
+                      fontWeight: 500,
+                      color: "#6C63FF",
+                      borderColor: "#cbd5e1",
+                      "&:hover": {
+                        borderColor: "#6C63FF",
+                        backgroundColor: "#f5f3ff",
+                      },
+                    }}
+                  >
+                    Consultancy Details
+                  </Button>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={() =>
+                      navigate(
+                        `/contact?package=${encodeURIComponent(
+                          `${item.docPackage.name} (${item.docPackage.price})`
+                        )}`
+                      )
+                    }
+                    sx={{
+                      textTransform: "none",
+                      borderRadius: "10px",
+                      py: 1,
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
+                      background: "linear-gradient(90deg, #6C63FF, #3F3DFF)",
+                      boxShadow: "0 4px 12px rgba(108, 99, 255, 0.25)",
+                      "&:hover": {
+                        background: "linear-gradient(90deg, #5a55e0, #2f2cda)",
+                      },
+                    }}
+                  >
+                    Get Package
+                  </Button>
                 </Stack>
               </Card>
             </motion.div>

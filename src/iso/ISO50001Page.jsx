@@ -22,6 +22,7 @@ import HomeIcon from "@mui/icons-material/Home"; // ✅ Added Home Icon
 import SvgIcon from "@mui/material/SvgIcon";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
+import DocumentPackageSection from "../DocumentPackageSection";
 
 // Custom Icons
 function CustomDoubleArrowIcon(props) {
@@ -178,6 +179,22 @@ export default function ISO50001Page() {
           </Grid>
 
         </Grid>
+
+        {/* Document Package Section */}
+        <DocumentPackageSection
+          standardCode="ISO 50001:2018"
+          standardName="Energy Management"
+          code="D117"
+          price="£449"
+          deliverables={[
+            "ISO 50001:2018 Energy Management Manual (editable MS Word)",
+            "Mandatory Energy Management Procedures & Flow Charts",
+            "Energy Review, Baseline & Performance Indicator (EnPI) Templates",
+            "EnMS Internal Audit Checklist with comprehensive audit questions",
+            "Energy Action Plan, Measurement & Verification Forms",
+            "100% customizable in MS Word & Excel with instant delivery",
+          ]}
+        />
 
         {/* FAQ + Guides Section */}
         <Container maxWidth="lg" disableGutters sx={{ py: 10 }}>
