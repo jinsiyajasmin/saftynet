@@ -21,7 +21,7 @@ export const contactEmails = {
 };
 
 export const postalAddress = {
-  streetAddress: "Unit 17f, The Lansbury Estates, 102 Lower Guildford Road",
+  streetAddress: "Unit 17F, Solent House, The Lansbury Estate, 102 Lower Guildford Road",
   addressLocality: "Knaphill, Woking",
   addressRegion: "England",
   postalCode: "GU21 2EP",
