@@ -4,6 +4,7 @@ const routes = [
   "",
   "/iso9001",
   "/iso14001",
+  "/iso14001/self-assessment",
   "/iso45001",
   "/iso50001",
   "/iso27001",

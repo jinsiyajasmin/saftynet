@@ -138,7 +138,7 @@ export default function ISO14001Page() {
                             <br /> Environmental Management System, Safety Nett can help.
                         </Typography>
 
-                        <Box sx={{ display: "flex", gap: 2 }}>
+                        <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
                             <Button
                 variant="contained"
                 component={NextLink}
@@ -156,6 +156,22 @@ export default function ISO14001Page() {
               >
                 Get a quote
               </Button>
+                            <Button
+                                variant="outlined"
+                                component={NextLink}
+                                href="/iso14001/self-assessment"
+                                sx={{
+                                    textTransform: "none",
+                                    borderRadius: "10px",
+                                    px: 3,
+                                    py: 1.2,
+                                    borderColor: "#6C63FF",
+                                    color: "#3F3DFF",
+                                    "&:hover": { borderColor: "#3F3DFF", backgroundColor: "#f5f3ff" },
+                                }}
+                            >
+                                Take the free self-assessment
+                            </Button>
                         </Box>
                     </Grid>
 

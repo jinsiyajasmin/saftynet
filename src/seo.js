@@ -3,6 +3,9 @@ export const siteUrl =
 
 export const siteName = "SafetyNett";
 
+// Public company website shown to customers (e.g. in the self-assessment report).
+export const companyWebsite = "www.safetynett.co.uk";
+
 export const products = [
   {
     name: "Site-Mate",

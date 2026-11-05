@@ -52,7 +52,7 @@ export default function Navbar() {
   const navigate = (path) => router.push(path);
   const pathname = usePathname();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const [productsAnchor, setProductsAnchor] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);

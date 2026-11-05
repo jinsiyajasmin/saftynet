@@ -94,6 +94,14 @@ export default function Home() {
               Get a Free Consultation
             </Link>
 
+            <Link
+              href="/iso14001/self-assessment"
+              className="relative z-20 px-8 py-3 rounded-xl font-medium text-white
+               border border-[#6C63FF] bg-[#6C63FF]/10
+               hover:bg-[#6C63FF]/25 transition duration-300 cursor-pointer">
+              ISO 14001 Self-Assessment
+            </Link>
+
             <button
               type="button"
               onClick={() => document.getElementById("iso-standards")?.scrollIntoView({ behavior: "smooth" })}
