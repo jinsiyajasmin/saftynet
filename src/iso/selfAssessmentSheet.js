@@ -118,12 +118,44 @@ async function graph(token, method, path, body) {
   return data;
 }
 
+// Finds the workbook's drive and item id. Accepts either a sharing link
+// (…/:x:/g/…) or the link from the Excel-in-browser address bar
+// (…/_layouts/15/Doc.aspx or doc2.aspx?sourcedoc={GUID}&file=Name.xlsx).
+async function resolveWorkbook(token, url) {
+  let sharesError;
+  try {
+    const item = await graph(token, "GET", `/shares/${shareId(url)}/driveItem?$select=id,parentReference`);
+    return { id: item.id, driveId: item.parentReference.driveId };
+  } catch (err) {
+    sharesError = err;
+  }
+
+  const u = new URL(url);
+  const docId = (u.searchParams.get("sourcedoc") || "").replace(/[{}]/g, "").toLowerCase();
+  const fileName = u.searchParams.get("file");
+  const layouts = u.pathname.indexOf("/_layouts/");
+  if (!docId || !fileName || layouts === -1) throw sharesError;
+
+  // "/:x:/r/personal/name/_layouts/…" → "/personal/name"
+  const sitePath = u.pathname.slice(0, layouts).replace(/^\/:[a-z]:\/[a-z]/i, "");
+  const site = await graph(token, "GET", `/sites/${u.hostname}:${sitePath}?$select=id`);
+  const drive = await graph(token, "GET", `/sites/${site.id}/drive?$select=id`);
+  const q = fileName.replace(/'/g, "''");
+  const found = await graph(
+    token,
+    "GET",
+    `/drives/${drive.id}/root/search(q='${encodeURIComponent(q)}')?$select=id,name,sharepointIds`
+  );
+  const match = found.value.find((f) => (f.sharepointIds?.listItemUniqueId || "").toLowerCase() === docId);
+  if (!match) throw new Error(`Workbook "${fileName}" (${docId}) not found in ${sitePath}`);
+  return { id: match.id, driveId: drive.id };
+}
+
 export async function appendSelfAssessmentRow(cfg, { details, results, completedAt }) {
   const token = await getToken(cfg);
 
-  // Resolve the sharing link to the actual file.
-  const item = await graph(token, "GET", `/shares/${shareId(cfg.sheetUrl)}/driveItem?$select=id,parentReference`);
-  const book = `/drives/${item.parentReference.driveId}/items/${item.id}/workbook`;
+  const item = await resolveWorkbook(token, cfg.sheetUrl);
+  const book = `/drives/${item.driveId}/items/${item.id}/workbook`;
 
   const headers = sheetHeaders(results);
   const row = sheetRow(details, results, completedAt);
