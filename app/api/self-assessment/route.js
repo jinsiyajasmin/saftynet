@@ -1,7 +1,8 @@
 import path from "node:path";
 import nodemailer from "nodemailer";
-import { CLAUSES } from "../../../src/iso/iso14001AssessmentData";
+import { CLAUSES, computeResults } from "../../../src/iso/iso14001AssessmentData";
 import { buildSelfAssessmentWorkbook } from "../../../src/iso/selfAssessmentExcel";
+import { appendSelfAssessmentRow, sheetConfig } from "../../../src/iso/selfAssessmentSheet";
 
 export const runtime = "nodejs";
 
@@ -115,8 +116,33 @@ export async function POST(request) {
     return Response.json({ error: "Some details or answers are missing or invalid." }, { status: 400 });
   }
 
+  const completedAt = new Date();
+  const results = computeResults(answers);
+
+  const tasks = [];
+  const emailCfg = emailConfig();
+  const sheetCfg = sheetConfig();
+  if (emailCfg) tasks.push(["email", sendEmail(emailCfg, { details, answers, results, completedAt })]);
+  if (sheetCfg) tasks.push(["sheet", appendSelfAssessmentRow(sheetCfg, { details, results, completedAt })]);
+
+  if (tasks.length === 0) {
+    return Response.json({ error: "Self-assessment delivery is not set up yet." }, { status: 500 });
+  }
+
+  const outcomes = await Promise.allSettled(tasks.map(([, p]) => p));
+  const status = {};
+  outcomes.forEach((o, i) => {
+    const [name] = tasks[i];
+    status[name] = o.status === "fulfilled" ? "ok" : "failed";
+    if (o.status === "rejected") console.error(`[self-assessment] ${name} failed:`, o.reason?.message || o.reason);
+  });
+
+  const anyOk = Object.values(status).includes("ok");
+  return Response.json({ ok: anyOk, ...status }, { status: anyOk ? 200 : 502 });
+}
+
+function emailConfig() {
   const host = process.env.SMTP_HOST;
-  const port = Number(process.env.SMTP_PORT || 587);
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   const from = process.env.SMTP_FROM || user;
@@ -124,44 +150,36 @@ export async function POST(request) {
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
+  if (!host || !user || !pass || !from || recipients.length === 0) return null;
+  return { host, port: Number(process.env.SMTP_PORT || 587), user, pass, from, recipients };
+}
 
-  if (!host || !user || !pass || !from || recipients.length === 0) {
-    return Response.json({ error: "Email is not set up yet." }, { status: 500 });
-  }
-
-  const completedAt = new Date();
-  const { buffer, results } = await buildSelfAssessmentWorkbook({ details, answers, completedAt });
+async function sendEmail({ host, port, user, pass, from, recipients }, { details, answers, results, completedAt }) {
+  const { buffer } = await buildSelfAssessmentWorkbook({ details, answers, completedAt });
   const company = details.company.replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-") || "Company";
   const stamp = completedAt.toISOString().slice(0, 10);
 
   const transporter = nodemailer.createTransport({ host, port, secure: port === 465, auth: { user, pass } });
-
-  try {
-    await transporter.sendMail({
-      from: `SafetyNett <${from}>`,
-      to: recipients,
-      replyTo: details.email,
-      subject: `ISO 14001 self-assessment: ${details.company} – ${results.overall}% (${results.band.name})`,
-      text:
-        `New ISO 14001:2026 self-assessment\n\n` +
-        `Name: ${details.firstName} ${details.lastName}\nCompany: ${details.company}\nEmail: ${details.email}\n` +
-        `Phone: ${details.phone}\nCountry: ${details.country}\nExisting client: ${details.existingClient}\n\n` +
-        `Overall: ${results.overall}% (${results.band.name})\n` +
-        results.perClause.map((c) => `Clause ${c.number} ${c.title}: ${c.pct}%`).join("\n") +
-        `\n\nFull details are in the attached Excel file.`,
-      html: summaryHtml(details, results),
-      attachments: [
-        {
-          filename: `SafetyNett-ISO14001-Self-Assessment-${company}-${stamp}.xlsx`,
-          content: buffer,
-          contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        },
-        { filename: "email-logo.png", path: LOGO_PATH, cid: "safetynett-logo" },
-      ],
-    });
-  } catch {
-    return Response.json({ error: "Could not send the assessment." }, { status: 502 });
-  }
-
-  return Response.json({ ok: true });
+  await transporter.sendMail({
+    from: `SafetyNett <${from}>`,
+    to: recipients,
+    replyTo: details.email,
+    subject: `ISO 14001 self-assessment: ${details.company} – ${results.overall}% (${results.band.name})`,
+    text:
+      `New ISO 14001:2026 self-assessment\n\n` +
+      `Name: ${details.firstName} ${details.lastName}\nCompany: ${details.company}\nEmail: ${details.email}\n` +
+      `Phone: ${details.phone}\nCountry: ${details.country}\nExisting client: ${details.existingClient}\n\n` +
+      `Overall: ${results.overall}% (${results.band.name})\n` +
+      results.perClause.map((c) => `Clause ${c.number} ${c.title}: ${c.pct}%`).join("\n") +
+      `\n\nFull details are in the attached Excel file.`,
+    html: summaryHtml(details, results),
+    attachments: [
+      {
+        filename: `SafetyNett-ISO14001-Self-Assessment-${company}-${stamp}.xlsx`,
+        content: buffer,
+        contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      },
+      { filename: "email-logo.png", path: LOGO_PATH, cid: "safetynett-logo" },
+    ],
+  });
 }
