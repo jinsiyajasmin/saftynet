@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import { CLAUSES, computeResults } from "../../../src/iso/iso14001AssessmentData";
 import { buildSelfAssessmentWorkbook } from "../../../src/iso/selfAssessmentExcel";
 import { appendSelfAssessmentRow, sheetConfig } from "../../../src/iso/selfAssessmentSheet";
+import { parseRecipients } from "../../../src/emailRecipients";
 
 export const runtime = "nodejs";
 
@@ -146,12 +147,7 @@ function emailConfig() {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   const from = process.env.SMTP_FROM || user;
-  const recipients = String(process.env.SELF_ASSESSMENT_TO || process.env.CONTACT_TO || "")
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean)
-    // Removed from recipients; strip if still present in an old CONTACT_TO env value.
-    .filter((item) => item.toLowerCase() !== "athulyadas005@gmail.com");
+  const recipients = parseRecipients(process.env.SELF_ASSESSMENT_TO || process.env.CONTACT_TO);
   if (!host || !user || !pass || !from || recipients.length === 0) return null;
   return { host, port: Number(process.env.SMTP_PORT || 587), user, pass, from, recipients };
 }

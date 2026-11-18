@@ -1,5 +1,6 @@
 import path from "node:path";
 import nodemailer from "nodemailer";
+import { parseRecipients } from "../../../src/emailRecipients";
 
 const LOGO_PATH = path.join(process.cwd(), "public", "email-logo.png");
 
@@ -93,12 +94,7 @@ export async function POST(request) {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   const from = process.env.SMTP_FROM || user;
-  const recipients = String(process.env.CONTACT_TO || "")
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean)
-    // Removed from recipients; strip if still present in an old CONTACT_TO env value.
-    .filter((item) => item.toLowerCase() !== "athulyadas005@gmail.com");
+  const recipients = parseRecipients(process.env.CONTACT_TO);
 
   if (!host || !user || !pass || !from || recipients.length === 0) {
     return Response.json({ error: "Email is not set up yet. Please try again later." }, { status: 500 });

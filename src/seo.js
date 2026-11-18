@@ -17,6 +17,8 @@ export const products = [
   {
     name: "iAudit Global",
     href: "https://www.iaudit.global/",
+    logo: "/iaudit-logo.png",
+    icon: "/iaudit-icon.png",
     summary: "ISO audit software for planning, running and reporting ISO 9001, 14001 and 45001 audits.",
   },
 ];
