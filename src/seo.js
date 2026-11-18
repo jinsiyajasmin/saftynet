@@ -8,8 +8,10 @@ export const companyWebsite = "www.safetynett.co.uk";
 
 export const products = [
   {
-    name: "Site-Mate",
-    href: "https://site-mateai.co.uk/",
+    name: "Nzou-Tech",
+    href: "https://nzou-tech.co.uk/",
+    logo: "/nzou-tech-logo.png",
+    icon: "/nzou-tech-icon-white.png",
     summary: "QHSE management software for engineering and manufacturing. Inspections, risk assessments, incidents, permits and compliance in one place.",
   },
   {

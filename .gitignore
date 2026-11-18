@@ -83,3 +83,4 @@ typings/
 # Dynamically generated artifacts
 dist
 node_modules
+.vercel

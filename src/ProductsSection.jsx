@@ -16,6 +16,9 @@ export default function ProductsSection() {
               key={product.href}
               className="rounded-2xl border border-gray-200 bg-[#f9fafb] p-8 flex flex-col"
             >
+              {product.logo && (
+                <img src={product.logo} alt={`${product.name} logo`} className="h-20 w-auto object-contain self-start mb-5" />
+              )}
               <h3 className="text-2xl font-semibold mb-3">{product.name}</h3>
               <p className="text-gray-500 leading-relaxed mb-6 flex-1">{product.summary}</p>
               <a

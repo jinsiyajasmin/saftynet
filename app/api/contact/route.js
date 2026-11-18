@@ -96,7 +96,9 @@ export async function POST(request) {
   const recipients = String(process.env.CONTACT_TO || "")
     .split(",")
     .map((item) => item.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    // Removed from recipients; strip if still present in an old CONTACT_TO env value.
+    .filter((item) => item.toLowerCase() !== "athulyadas005@gmail.com");
 
   if (!host || !user || !pass || !from || recipients.length === 0) {
     return Response.json({ error: "Email is not set up yet. Please try again later." }, { status: 500 });

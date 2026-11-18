@@ -129,6 +129,9 @@ export default function Navbar() {
               rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}
             >
+              {product.icon && (
+                <img src={product.icon} alt="" style={{ height: 20, width: "auto", marginRight: 10 }} />
+              )}
               <ListItemText primary={product.name} />
             </ListItemButton>
           </ListItem>
@@ -333,6 +336,9 @@ export default function Navbar() {
                       "&:hover": { backgroundColor: "rgba(255,255,255,0.08)" },
                     }}
                   >
+                    {product.icon && (
+                      <img src={product.icon} alt="" style={{ height: 22, width: "auto", marginRight: 10 }} />
+                    )}
                     {product.name}
                   </MenuItem>
                 ))}
